@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE install PUBLIC "-//Joomla! 2.5//DTD template 1.0//EN" "http://www.joomla.org/xml/dtd/1.6/template-install.dtd">
+<extension version="2.5" type="template" client="site">
+    <name>jt005_ghs</name>
+    <version>2.5.0</version>
+    <creationDate>April 10, 2012</creationDate>
+    <author>JoomlaThemes.co</author>
+    <authorEmail>support@joomlathemes.co</authorEmail>
+    <authorUrl>http://joomlathemes.co</authorUrl>
+    <copyright>Copyright 2010 - JoomlaThemes.co</copyright>
+    <license>Creative Commons</license>
+	<description><![CDATA[
+	<h1>JT005 - Cameleon</h1>	
+	<img src="../templates/jt005_j25/template_thumbnail.png" align="left" hspace="10" style="padding-right:10px;"/>
+	<b>Free Joomla 2.5 Template developed by <a target="_blank" href="http://joomlathemes.co">JoomlaThemes</a>, released under the <a target="_blank" href="http://creativecommons.org/licenses/by/3.0/us/">Creative Commons Attribution 3.0</a>.
+	<br />Our free joomla templates may be used for both personal and commercial websites.<br />
+	<br />Copyright &copy; 2012 JoomlaThemes.co - All Rights Reserved</b>
+	]]></description>
+	<files>
+		<filename>index.php</filename>
+		<filename>favicon.ico</filename>
+		<filename>component.php</filename>
+		<filename>functions.php</filename>
+		<filename>template_thumbnail.png</filename>
+		<filename>templateDetails.xml</filename>
+		<folder>html/</folder>
+		<folder>css/</folder>
+		<folder>images/</folder>
+		<folder>js/</folder>
+		<folder>php/</folder>
+	</files>
+	<positions>
+		<position>breadcrumbs</position>
+		<position>top</position>
+		<position>search</position>
+		<position>logo</position>
+		<position>menu</position>
+		<position>left</position>
+		<position>right</position>
+		<position>slideshow</position>
+		<position>user1</position>
+		<position>user2</position>
+		<position>user3</position>
+		<position>user4</position>
+		<position>user5</position>
+		<position>user6</position>
+		<position>user7</position>
+		<position>user8</position>
+		<position>user9</position>
+		<position>user10</position>
+		<position>copyright</position>
+	</positions>
+	<config>
+		<fields name="params" addfieldpath="/templates/jt005_j25/php">
+			<fieldset name="advanced">
+				<field name="jquery" type="list" default="yes" label="jQuery" description="Enable or disable jQuery latest version." filter="word">
+					<option value="yes">Enable</option>
+					<option value="no">Disable</option>
+				</field>	
+				<field name="scrolltop" type="list" default="yes" label="Back to Top" description="Enable or disable Back to Top button. This requires jQuery plugin." filter="word">
+					<option value="yes">Enable</option>
+					<option value="no">Disable</option>
+				</field>
+				<field name="superfish" type="list" default="yes" label="Superfish Menu Effect" description="Enable or disable Supperfish effect for main navigation menu. This requires jQuery plugin." filter="word">
+					<option value="yes">Enable</option>
+					<option value="no">Disable</option>
+				</field>
+				
+				<field type="spacer" default="" />														
+				<field name="logotype" type="list" default="image" label="Logo Type" description="Choose the type of the logo you want to display." filter="word">
+						<option value="image">Image Logo</option>
+						<option value="text">Text Logo</option>
+				</field>			
+				<field name="logo" type="media" label="Logo Image" description="Please choose an image. If you want to display the original logo from the template, click on Clear and leave the field blank." />
+				<field name="sitetitle"  type="text" default="Cameleon"	label="Logo Text" description="Please add your site title here, it's only displayed if you don't use a the text logo option." filter="string" />
+				<field name="sitedesc"  type="text" default=""	label="Site Description" description="Add your site's description here. Leave it blank to disable." filter="string" />
+					
+				<field type="spacer" default="" />						
+				<field name="fluid" type="list" default="no" label="Fluid Width" description="This option will make the template width fluid." filter="word">
+					<option value="yes">Yes</option>
+					<option value="no">No</option>
+				</field>
+				<field name="width"  type="text" default="960"	label="Template Width" description="Set template with in pixles. This will take effect only if the width is NOT fluid. ie: 960" filter="string" />
+				<field name="headerheight"  type="text" default="150"	label="Header Height" description="Height of the header area. Maximum value 500. ie: 150" filter="string" />	
+			</fieldset>
+			
+			<fieldset name="font_style" label="Font Style / Size">
+				<field name="fonts" type="list" default="Averia Sans Libre" label="Font Family" description="Choose a font style for headings, logo and menus." filter="string">
+					<option value="Averia Sans Libre">Averia Sans Libre</option>
+					<option value="Fredoka One">Fredoka One</option>
+					<option value="Orbitron">Orbitron</option>
+					<option value="Berkshire Swash">Berkshire Swash</option>
+					<option value="Londrina Shadow">Londrina Shadow</option>
+					<option value="Seaweed Script">Seaweed Script</option>
+					<option value="Electrolize">Electrolize</option>
+					<option value="Yanone Kaffeesatz">Yanone Kaffeesatz</option>
+					<option value="Audiowide">Audiowide</option>
+					<option value="Chau Philomene One">Chau Philomene One</option>
+					<option value="Crushed">Crushed</option>
+				</field>
+				<field label="Values are in pixles / px. Please insert only values and do not use any size for fonts like px, em, etc..." type="spacer" default=""/>
+				<field name="psize"  type="text" default="13"	label="Basic Font Size" description="Add the text size for paragraphs. This is the basic text." filter="string" />
+				
+				<field name="logosize"  type="text" default="50"	label="Logo Font Size" description="Insert font size of text logo. Not applicable for image logo." filter="string" />
+				<field name="descsize"  type="text" default="15"	label="Desciption Font Size" description="Font size of site description." filter="string" />
+				<field name="h1"  type="text" default="30"	label="Heading 1" description="Heading 1 / H1 font size." filter="string" />
+				<field name="h2"  type="text" default="25"	label="Heading 2" description="Heading 2 / H2 font size." filter="string" />
+				<field name="h3"  type="text" default="20"	label="Heading 3" description="Heading 3 / H3 font size." filter="string" />
+				<field name="h4"  type="text" default="15"	label="Heading 4,5,6" description="Heading 4,5,6 / H4,H5,H6 font size." filter="string" />
+				
+				<field name="menusize"  type="text" default="15"	label="Menu Font Size" description="Choose a font size for horizontal and sidebar menus." filter="string" />
+				
+			</fieldset>
+			
+			<fieldset name="colors" label="Colors">
+			
+				<field label="Horizontal Menu Colors:" type="spacer" default=""/>
+				<field name="menubg" type="jscolor" default="#000000" label="Menu Background" description="Select background color." />
+				<field name="menubghover" type="jscolor" default="#0853A0" label="Menu BG Hover / Active" description="Select background color." />
+				<field name="menulink" type="jscolor" default="#999999" label="Menu Link" description="Select background color." />
+				<field name="menulinkhover" type="jscolor" default="#ffffff" label="Menu Link Hover / Active" description="Select background color." />
+						 
+				<field label="Site Colors:" type="spacer" default=""/>
+				<field name="bgcolor" type="jscolor" default="#cccccc" label="Background" description="Select website background color." />
+				<field name="textcolor" type="jscolor" default="#333333" label="Text Color" description="Color of paragraph text." />
+				<field name="linkcolor" type="jscolor" default="#0853A0" label="Link Color" description="Select color of link." />
+				<field name="linkhovercolor" type="jscolor" default="#000000" label="Link Hover Color" description="Select color of hovered link." />
+				
+				<field label="Header Colors:" type="spacer" default=""/>			
+				<field name="headerbgcolor" type="jscolor" default="#0853A0" label="Header Background" description="Select background color of header area." />
+				<field name="headertextcolor" type="jscolor" default="#ffffff" label="Header Text" description="Select text color of header area." />
+				<field label="Content Colors:" type="spacer" default=""/>
+				<field name="contentbgcolor" type="jscolor" default="#ffffff" label="Content Background" description="Select background color of content area." />
+				<field name="articleinfo" type="jscolor" default="#cccccc" label="Article Info" description="Color of article info text." />
+				<field name="headingcolor" type="jscolor" default="#0853A0" label="Headings" description="H1, H2, H3, H4, H5, H6 general colors." />
+				
+				<field label="Sidebar Colors:" type="spacer" default=""/>
+				<field name="sideh3color" type="jscolor" default="#FFFFFF" label="Sidebar Module Title" description="Sidebar module title color" />
+				<field name="sideh3bgcolor" type="jscolor" default="#0853A0" label="Sidebar Title Background" description="Background color of sidebar module title." />
+				<field name="sidemenucolor" type="jscolor" default="#cccccc" label="Sidebar Menu Link" description="" />
+				<field name="sidemenuhovercolor" type="jscolor" default="#0853A0" label="Sidebar Menu Active Link" description="" />
+				<field name="sidemenubordercolor" type="jscolor" default="#cccccc" label="Sidebar Menu Border" description="" />
+			</fieldset>
+
+		</fields>
+					
+	</config>	
+</extension>

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Id: pl-PL.xml 20196 2012-01-24 19:50:25 zwiastun $ -->
+<metafile version="2.5" client="site">
+    <tag>pl-PL</tag>
+	<name>Polish (PL)</name>
+    <description>Polski pakiet językowy witryny Joomla 2.5</description>
+	<version>2.5.1</version>
+	<creationDate>2012-02-02</creationDate>
+	<author>Polski Zespół Tłumaczy: Polish Joomla! Centre</author>
+	<authorEmail>zwiastun@joomla.pl</authorEmail>
+	<authorUrl>www.joomla.pl</authorUrl>
+	<copyright>Copyright (C) 2005 - 2012 Open Source Matters &amp; Polish Centre Joomla!. All rights reserved.</copyright>
+	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
+	<description>pl-PL: Polski pakiet językowy zaplecza Joomla 2.5.0</description>	
+	<files>
+		<filename>pl-PL.com_contact.ini</filename>
+		<filename>pl-PL.com_content.ini</filename>
+		<filename>pl-PL.com_finder.ini</filename>
+		<filename>pl-PL.com_mailto.ini</filename>
+		<filename>pl-PL.com_media.ini</filename>
+		<filename>pl-PL.com_messages.ini</filename>
+		<filename>pl-PL.com_newsfeeds.ini</filename>
+		<filename>pl-PL.com_search.ini</filename>
+		<filename>pl-PL.com_users.ini</filename>
+		<filename>pl-PL.com_weblinks.ini</filename>
+		<filename>pl-PL.com_wrapper.ini</filename>
+		<filename>pl-PL.files_joomla.sys.ini</filename>
+		<filename>pl-PL.finder_cli.ini</filename>
+		<filename>pl-PL.ini</filename>
+		<filename>pl-PL.lib_joomla.ini</filename>
+		<filename>pl-PL.lib_joomla.sys.ini</filename>
+		<filename>pl-PL.lib_phpmailer.sys.ini</filename>
+		<filename>pl-PL.lib_phputf8.sys.ini</filename>
+		<filename>pl-PL.lib_simplepie.sys.ini</filename>
+		<filename>pl-PL.localise.php</filename>
+		<filename>pl-PL.mod_articles_archive.ini</filename>
+		<filename>pl-PL.mod_articles_archive.sys.ini</filename>
+		<filename>pl-PL.mod_articles_categories.ini</filename>
+		<filename>pl-PL.mod_articles_categories.sys.ini</filename>
+		<filename>pl-PL.mod_articles_category.ini</filename>
+		<filename>pl-PL.mod_articles_category.sys.ini</filename>
+		<filename>pl-PL.mod_articles_latest.ini</filename>
+		<filename>pl-PL.mod_articles_latest.sys.ini</filename>
+		<filename>pl-PL.mod_articles_news.ini</filename>
+		<filename>pl-PL.mod_articles_news.sys.ini</filename>
+		<filename>pl-PL.mod_articles_popular.ini</filename>
+		<filename>pl-PL.mod_articles_popular.sys.ini</filename>
+		<filename>pl-PL.mod_banners.ini</filename>
+		<filename>pl-PL.mod_banners.sys.ini</filename>
+		<filename>pl-PL.mod_breadcrumbs.ini</filename>
+		<filename>pl-PL.mod_breadcrumbs.sys.ini</filename>
+		<filename>pl-PL.mod_custom.ini</filename>
+		<filename>pl-PL.mod_custom.sys.ini</filename>
+		<filename>pl-PL.mod_feed.ini</filename>
+		<filename>pl-PL.mod_feed.sys.ini</filename>
+		<filename>pl-PL.mod_finder.ini</filename>
+		<filename>pl-PL.mod_finder.sys.ini</filename>
+		<filename>pl-PL.mod_footer.ini</filename>
+		<filename>pl-PL.mod_footer.sys.ini</filename>
+		<filename>pl-PL.mod_languages.ini</filename>
+		<filename>pl-PL.mod_languages.sys.ini</filename>
+		<filename>pl-PL.mod_login.ini</filename>
+		<filename>pl-PL.mod_login.sys.ini</filename>
+		<filename>pl-PL.mod_menu.ini</filename>
+		<filename>pl-PL.mod_menu.sys.ini</filename>
+		<filename>pl-PL.mod_random_image.ini</filename>
+		<filename>pl-PL.mod_random_image.sys.ini</filename>
+		<filename>pl-PL.mod_related_items.ini</filename>
+		<filename>pl-PL.mod_related_items.sys.ini</filename>
+		<filename>pl-PL.mod_search.ini</filename>
+		<filename>pl-PL.mod_search.sys.ini</filename>
+		<filename>pl-PL.mod_stats.ini</filename>
+		<filename>pl-PL.mod_stats.sys.ini</filename>
+		<filename>pl-PL.mod_syndicate.ini</filename>
+		<filename>pl-PL.mod_syndicate.sys.ini</filename>
+		<filename>pl-PL.mod_users_latest.ini</filename>
+		<filename>pl-PL.mod_users_latest.sys.ini</filename>
+		<filename>pl-PL.mod_weblinks.ini</filename>
+		<filename>pl-PL.mod_weblinks.sys.ini</filename>
+		<filename>pl-PL.mod_whosonline.ini</filename>
+		<filename>pl-PL.mod_whosonline.sys.ini</filename>
+		<filename>pl-PL.mod_wrapper.ini</filename>
+		<filename>pl-PL.mod_wrapper.sys.ini</filename>
+		<filename>pl-PL.pkg_joomla.sys.ini</filename>
+		<filename>pl-PL.tpl_atomic.ini</filename>
+		<filename>pl-PL.tpl_atomic.sys.ini</filename>
+		<filename>pl-PL.tpl_beez_20.ini</filename>
+		<filename>pl-PL.tpl_beez_20.sys.ini</filename>
+		<filename>pl-PL.tpl_beez5.ini</filename>
+		<filename>pl-PL.tpl_beez5.sys.ini</filename>
+	</files>	
+	<metadata>
+		<name>Polish (PL)</name>
+		<tag>pl-PL</tag>
+		<rtl>0</rtl>
+		<locale>pl-PL.utf8, pl_PL.UTF8, pl_PL.utf8, pl_PL.UTF-8, pl_PL.utf-8, polish_POLISH.UTF8, polish_POLISH.utf8, pl.UTF8, polish.UTF8, polish-pl.UTF8, PL.UTF8, polish.utf8, polish-pl.utf8, PL.utf8, pl_PL, polish_POLISH, pl, polish, polish-pl, PL, poland, Poland, pl_PL.ISO8859-2, polish_POLISH.ISO8859-2, pl.ISO8859-2, polish.ISO8859-2 polish-pl.ISO8859-2, PL.ISO8859-2, pl_PL.iso88592, polish_POLISH.iso88592, pl.iso88592, polish.iso88592, polish-pl.iso88592, PL.iso88592</locale>
+		<firstDay>1</firstDay>
+	</metadata>
+	<params />
+</metafile>
