@@ -4,4 +4,7 @@
 
 # Copyright 2013 William C Waggoner
 
+# Read the options for the hidden file
+. ./smtpopts.zsh
+
 
