@@ -1,9 +1,40 @@
-Content-Type: multipart/mixed; boundary=047d7bdc9c0484e82504d97f4fc9
+Delivered-To: ctgreybeard@gmail.com
+Received: by 10.194.242.5 with SMTP id wm5csp179585wjc;
+        Wed, 3 Apr 2013 20:02:31 -0700 (PDT)
+Return-Path: <kwquilter@gmail.com>
+Received-SPF: pass (google.com: domain of kwquilter@gmail.com designates 10.224.178.77 as permitted sender) client-ip=10.224.178.77
+Authentication-Results: mr.google.com;
+       spf=pass (google.com: domain of kwquilter@gmail.com designates 10.224.178.77 as permitted sender) smtp.mail=kwquilter@gmail.com;
+       dkim=pass header.i=@gmail.com
+X-Received: from mr.google.com ([10.224.178.77])
+        by 10.224.178.77 with SMTP id bl13mr4230287qab.13.1365044551443 (num_hops = 1);
+        Wed, 03 Apr 2013 20:02:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:date:message-id:subject:from:to
+         :content-type;
+        bh=vvrQinyS6b22CLppd2HugNV+w+1pHSHIV4ueD4F3YO4=;
+        b=RK8XpWdUJ+Z5TCOgxC4yfIGHIuob+MxGzD//gfBv1V9LYWjFzpxMIPJNR9Vg9DS9r1
+         QSs3Bxnn/7JaUO9D0FRSD1VbIJ9l7l6AXZG8IW6mlJvftioq59uIMGIR1GgBoh1qgBGE
+         WofnQQ87G8ZCDztPmxXoZgFrK86u/QVdnSvajl0/YP4vD1zmm+coToD9r8gjkwTKJVpK
+         v2/GijS1vire1KRSf2A7uJNqAcEKfJgcu0KgozXrWfyLXhKY5H4ls5M/jF2TH9M06I7C
+         /u8+DRLAd3oVCp7Cy1IL0Qt2yQP1CIqKNQoUSdKH5mQKv7YiylM1TK54/BGex9noIHwK
+         y6Sg==
+MIME-Version: 1.0
+X-Received: by 10.224.178.77 with SMTP id bl13mr3658122qab.13.1365044551057;
+ Wed, 03 Apr 2013 20:02:31 -0700 (PDT)
+Received: by 10.49.71.209 with HTTP; Wed, 3 Apr 2013 20:02:30 -0700 (PDT)
+Date: Wed, 3 Apr 2013 23:02:30 -0400
+Message-ID: <CAKr1-d6Y8Gxihp2qXfAKVZXH_QA2z9Oc7hRDMtN=ooDbnkXXRw@mail.gmail.com>
+Subject: Greenwich High School Class of '64 50th Reunion
+From: Karen Waggoner <kwquilter@gmail.com>
+To: Bill Waggoner <ctgreybeard@gmail.com>, ctgreybeard@mac.com
+Content-Type: multipart/mixed; boundary=20cf302ef79e9185a504d9803336
 
---047d7bdc9c0484e82504d97f4fc9
-Content-Type: multipart/alternative; boundary=047d7bdc9c0484e82204d97f4fc7
+--20cf302ef79e9185a504d9803336
+Content-Type: multipart/alternative; boundary=20cf302ef79e9185a104d9803334
 
---047d7bdc9c0484e82204d97f4fc7
+--20cf302ef79e9185a104d9803334
 Content-Type: text/plain; charset=ISO-8859-1
 
 Hi, GHS '64 Alumni,
@@ -39,34 +70,44 @@ Dale Cravens Litvany                                     Marc Particelli
 Linda Hall Esposito                                        Jim Pucci
 Karen Ramsey Waggoner                              Mickey Sherman
 
---047d7bdc9c0484e82204d97f4fc7
+--20cf302ef79e9185a104d9803334
 Content-Type: text/html; charset=ISO-8859-1
 Content-Transfer-Encoding: quoted-printable
 
 <div dir=3D"ltr"><div><div><div><div><div><div><div><div><div><div>Hi, GHS =
-&#39;64 Alumni,<br><br></div>It&#39;s time!=A0 Hard to believe that it&#39;=
-s been almost 50 years since we left the halls of GHS; but it has, and it&#=
-39;s time to get together and figure out where we&#39;ve all been and what =
-we&#39;ve done.=A0 A group of us got together on Facebook and formed a comm=
-ittee to plan a reunion, our first in 20 years.=A0 We&#39;ve got plans for =
-a fabulous weekend of events for the weekend of May 30, 31, and June 1, 201=
-4.=A0 Mark your calendars and plan on being in Greenwich for our 50th reuni=
-on.=A0 <br>
-<br></div>We need your help!=A0 We have a list of mailing addresses (some w=
-e are pretty sure are no longer valid) but we would prefer to use email as =
-our primary contact.=A0 If you would confirm your email address to my addre=
-ss, we will make sure you&#39;re on the list for information.=A0 If you are=
- in touch with a class member and know their current address, please send m=
-e the information.=A0 <br>
+&#39;64 Alumni,<br><br></div>It&#39;s
+ time!=A0 Hard to believe that it&#39;s been almost 50 years since we left =
+the
+ halls of GHS; but it has, and it&#39;s time to get together and figure out=
+=20
+where we&#39;ve all been and what we&#39;ve done.=A0 A group of us got toge=
+ther on
+ Facebook and formed a committee to plan a reunion, our first in 20=20
+years.=A0 We&#39;ve got plans for a fabulous weekend of events for the week=
+end
+ of May 30, 31, and June 1, 2014.=A0 Mark your calendars and plan on being
+ in Greenwich for our 50th reunion.=A0 <br>
+<br></div>We need your help!=A0 We have a list of mailing addresses (some=
+=20
+we are pretty sure are no longer valid) but we would prefer to use email
+ as our primary contact.=A0 If you would confirm your email address to my=
+=20
+address, we will make sure you&#39;re on the list for information.=A0 If yo=
+u=20
+are in touch with a class member and know their current address, please=20
+send me the information.=A0 <br>
 <br></div>I&#39;m attaching a list of classmates for whom we have no curren=
-t contact information.=A0 If you have information on any of them, please le=
-t me know, even if it&#39;s as vague as &quot;I think he&#39;s near Atlanta=
-.&quot;=A0 Each little piece helps.<br>
+t
+ contact information.=A0 If you have information on any of them, please=20
+let me know, even if it&#39;s as vague as &quot;I think he&#39;s near Atlan=
+ta.&quot;=A0 Each
+ little piece helps.<br>
 <br></div>You can send information to me at <a href=3D"mailto:kwquilter@gma=
-il.com">kwquilter@gmail.com</a>, or by mail to:=A0 Karen Waggoner, PO Box 5=
-58, Bethel, CT=A0 06801.=A0 <br></div><br></div><u>If you wish to help out =
-on the Reunion Committee,</u> please let us know.=A0 The committee currentl=
-y includes:<br>
+il.com" target=3D"_blank">kwquilter@gmail.com</a>, or by mail to:=A0 Karen =
+Waggoner, PO Box 558, Bethel, CT=A0 06801.=A0 <br></div><br></div><u>If you=
+ wish to help out on the Reunion Committee,</u> please let us know.=A0 The =
+committee currently includes:<br>
+
 <br></div>Judy Annicelli Hamilton=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
 =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 Ed Baird<br></div=
 >Dale Cravens Litvany=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
@@ -74,16 +115,18 @@ y includes:<br>
 /div>Linda Hall Esposito=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
 =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 Jim Pucc=
 i<br>
-</div>Karen Ramsey Waggoner=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
-=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 Mickey Sherman<br></div>
 
---047d7bdc9c0484e82204d97f4fc7--
---047d7bdc9c0484e82504d97f4fc9
+</div>Karen Ramsey Waggoner=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
+=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 Mickey Sherman<br><div dir=3D"ltr">=
+<br></div></div>
+
+--20cf302ef79e9185a104d9803334--
+--20cf302ef79e9185a504d9803336
 Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document; 
 	name="Missing Info.docx"
 Content-Disposition: attachment; filename="Missing Info.docx"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: f_hf39z8pm0
+X-Attachment-Id: f_hf3c7pf80
 
 UEsDBBQABgAIAAAAIQDpURCwjQEAAMIFAAATAAgCW0NvbnRlbnRfVHlwZXNdLnhtbCCiBAIooAAC
 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
@@ -1719,4 +1762,5 @@ cHMvY29yZS54bWxQSwECLQAUAAYACAAAACEAt1pTqzMHAABGOgAADwAAAAAAAAAAAAAAAADgWwEA
 d29yZC9zdHlsZXMueG1sUEsBAi0AFAAGAAgAAAAhAB6MbrA+AgAA5wcAABIAAAAAAAAAAAAAAAAA
 QGMBAHdvcmQvZm9udFRhYmxlLnhtbFBLAQItABQABgAIAAAAIQCOA+39ggEAANMCAAAQAAAAAAAA
 AAAAAAAAAK5lAQBkb2NQcm9wcy9hcHAueG1sUEsFBgAAAAANAA0ATgMAAGZoAQAAAA==
---047d7bdc9c0484e82504d97f4fc9--
+--20cf302ef79e9185a504d9803336--
+

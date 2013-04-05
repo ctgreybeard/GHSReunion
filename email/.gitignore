@@ -3,3 +3,7 @@ class of 64 - GHSReunion.csv
 
 # Ignore the parameter file, it has passwords, etc.
 smtpopts.zsh
+smtpopts.pm
+
+# Testing output
+mimetest.out

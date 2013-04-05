@@ -1,3 +1,7 @@
 # .gitignore
 .DS_Store
 *.swp
+
+# Backup files
+*.bak
+*.old
