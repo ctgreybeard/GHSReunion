@@ -7,3 +7,6 @@ smtpopts.pm
 
 # Testing output
 mimetest.out
+
+# perltidy logs
+*.LOG
