@@ -5,13 +5,23 @@
 use strict;
 use warnings;
 
+# Common routines
 use Getopt::Long;
-use Mail::Sendmail;
+use Data::Dumper::Perltidy;
+
+# Email building and sending
+use MIME::Parser;
+use MIME::Head;
+use Email::Sender::Simple qw/sendmail/;
+use Email::Sender::Transport::SMTP::Persistent;
+use Email::Sender::Transport::Test;
+
+# Template handling
 use Text::Template;
 use Text::CSV::Auto;
 
 # Set DEBUG for testing
-my $DEBUG = 0;
+my $DEBUG = 1;
 
 sub DEBUG($$) {
     my ($debug_lvl, $msg) = @_;
@@ -21,19 +31,31 @@ sub DEBUG($$) {
 };
 
 # Common parameters
-my $test_mode = 0;
+my $test_mode = 1;
 
 # SMTP parameters
-my $smtp_server = "";
-my $smtp_port = 2525;
-my $smtp_user = "";
-my $smtp_passwd = "";
-my $smtp_sasl = 1;
+our $smtp_server;
+our $smtp_port;
+our $smtp_user;
+our $smtp_passwd;
+our $smtp_sasl;
+our $smtp_from;
+our $smtp_bounce;
+require "smtpopts.pm";
+
+(        $smtp_server
+      && $smtp_port
+      && $smtp_user
+      && $smtp_passwd
+      && $smtp_sasl
+      && $smtp_from
+      && $smtp_bounce )
+  or die "SMTP options not set.\n";
 
 # CSV parameters
-my $email_subject = "";
-my $input_csv = "";	# Filename is required
-my $name_hdr  = "Addr1";
+my $email_subject;
+my $input_csv;	# Filename is required
+my $name_hdr;
 my $email_hdr = "Email";
 my $bounce_hdr = "Email Bounce";
 my $gname_hdr = "GivenName";
