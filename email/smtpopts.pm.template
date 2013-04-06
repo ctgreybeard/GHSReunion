@@ -1,0 +1,12 @@
+# This is a template for smtpopts.pl
+# This file will contain private information such as passwords and user Ids
+# and, as such, should NOT be world readable or saved to public data spaces
+# such as guthub.  Be sure, if you use git, to add smtpopts.pl file to .gitignore
+
+our $smtp_server="your.outgoing.mailserver.com";
+our $smtp_port=yourserversport;
+our $smtp_user='yourloginusername';
+our $smtp_passwd='yourloginpassword';
+our $smtp_sasl=usesasl;
+our $smtp_from='"From fullname" <fromemailaddress>';;
+our $smtp_bounce='ReturnErrorsEmailAddress';;
