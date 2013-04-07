@@ -35,7 +35,7 @@ while getopts dtha:m:l: myarg; do
     	'l' )
     		logfile=$OPTARG
     		;;
-    	':' )
+    	':'|'?' )
     		print -u2 "Quitting on option error";
     		exit 1;
     esac

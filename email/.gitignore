@@ -1,5 +1,12 @@
-# Ignore the CSV file
+# Ignore the CSV files
 class of 64 - GHSReunion.csv
+GHS*.csv
+
+# Include the committee list
+!GHSCommittee.csv
+
+# Ignore the MSG files
+GHS*.msg
 
 # Ignore the parameter file, it has passwords, etc.
 smtpopts.zsh
