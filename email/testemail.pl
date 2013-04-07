@@ -13,12 +13,12 @@ use Mail::Sendmail qw(sendmail %mailcfg);
 use Data::Dumper;
 use smtpopts;
 
-my $to = "ctgreybeard+ghstest\@gmail.com";
-my $from = "karenwaggoner\@ghs64reunion.org";
-my $bounce = "admin\@ghs64reunion.org";
-my $reply = $from;
+my $to      = "ctgreybeard+ghstest\@gmail.com";
+my $from    = "karenwaggoner\@ghs64reunion.org";
+my $bounce  = "admin\@ghs64reunion.org";
+my $reply   = $from;
 my $subject = "Test reunion email";
-my $mesg = <<MESG;
+my $mesg    = <<MESG;
 --089e01177461f4e59304d980c151
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
@@ -44,17 +44,20 @@ ont>Bill</font></font>=E2=80=8B</div></font><br></div>
 
 --089e01177461f4e59304d980c151--
 MESG
-my @Content_Type = ( "Content-Type", "multipart/alternative; boundary=089e01177461f4e59304d980c151" );
+my @Content_Type = (
+    "Content-Type",
+    "multipart/alternative; boundary=089e01177461f4e59304d980c151"
+);
 
-$mailcfg{'smtp'} = [ $smtp_server ];
-$mailcfg{'mime'} = 0;
-$mailcfg{'port'} = $smtp_port;
+$mailcfg{'smtp'}  = [$smtp_server];
+$mailcfg{'mime'}  = 0;
+$mailcfg{'port'}  = $smtp_port;
 $mailcfg{'debug'} = 1;
 
 my %mail;
-$mail{'To'} = $to;
-$mail{'From'} = $from;
+$mail{'To'}        = $to;
+$mail{'From'}      = $from;
 $mail{'Errors-to'} = $bounce;
-$mail{'Reply-to'} = $reply;
-$mail{'Subject'} = $subject;
-$mail{'Message'} = $mesg;
+$mail{'Reply-to'}  = $reply;
+$mail{'Subject'}   = $subject;
+$mail{'Message'}   = $mesg;
