@@ -67,6 +67,7 @@ sub LOG($$) {
 
 # Testing
 use Data::Dumper::Perltidy;
+use Try::Tiny::SmartCatch;
 
 # CSV processing
 use Text::CSV::Auto;
@@ -115,6 +116,7 @@ require "smtpopts.pm";
 # Various statistics
 my $input_records = 0;
 my $sent_messages = 0;
+my $send_errors   = 0;
 
 # Useful stuff
 my $DEBUG;
@@ -174,7 +176,7 @@ sub cleanup_log() {
 
 sub init_message() {
     LOG( $LOG_DETAIL, "init_message: start" );
-    
+
     LOG( $LOG_CRITICAL, "init_message: message file not specified" )
       unless ($model_message_file);
 
@@ -195,21 +197,21 @@ sub init_message() {
         LOG( $LOG_CRITICAL, "init_message: message parse error: $error" )
           ;          # Does not return
     }
-    
-	LOG($LOG_CRITICAL, "init_message: Model message has no Subject")
-		unless ($model_message->head->get("Subject"));
 
-	LOG($LOG_CRITICAL, "init_message: Model message has no Content-type")
-		unless ($model_message->head->get("Content-Type"))	;	
+    LOG( $LOG_CRITICAL, "init_message: Model message has no Subject" )
+      unless ( $model_message->head->get("Subject") );
+
+    LOG( $LOG_CRITICAL, "init_message: Model message has no Content-type" )
+      unless ( $model_message->head->get("Content-Type") );
 
     LOG( $LOG_DETAIL, "init_message: stop" );
 }
 
 sub build_message($) {
     LOG( $LOG_DETAIL, "build_message: start" );
-    
+
     sub do_part($);
-    
+
     sub do_part($)
     {    # This processes each part and applies the template if necessary
         my $this_part = shift(@_);
@@ -217,40 +219,45 @@ sub build_message($) {
         if ( $this_part->parts()
           )    # If it has parts then process those recursively
         {
-          map( do_part($_), $this_part->parts() );
+            map( do_part($_), $this_part->parts() );
         } else {
             if ( $this_part->effective_type =~ m/^text\/(?:plain|html)$/ ) {
                 apply_template($this_part);
             }
         }
     }
-    my ($inrec, $newhead, $subject, $contenttype, $newmessage, $newparts);
-    
+    my ( $inrec, $newhead, $subject, $contenttype, $newmessage, $newparts );
+
     $inrec = shift(@_);
 
-	# Build new message header
-	
-	$newhead = MIME::Head->new();
+    # Build new message header
 
-	$newhead->replace( "To", sprintf "\"%s\" <%s>",  ${$inrec}{$fname_hdr}, ${$inrec}{$email_hdr});
-	$newhead->replace( "From",     $smtp_from );
-	$newhead->replace( "Reply-To", $smtp_from );
+    $newhead = MIME::Head->new();
 
-	$subject = $model_message->head->get("Subject");
-	chomp $subject;
-	$newhead->replace( "Subject", $subject );
+    $newhead->replace(
+        "To",
+        sprintf "\"%s\" <%s>",
+        ${$inrec}{$fname_hdr},
+        ${$inrec}{$email_hdr}
+    );
+    $newhead->replace( "From",     $smtp_from );
+    $newhead->replace( "Reply-To", $smtp_from );
 
-	$contenttype = $model_message->head->get("Content-Type");
-	chomp $contenttype;
-	$newhead->replace( "Content-Type", $contenttype );
+    $subject = $model_message->head->get("Subject");
+    chomp $subject;
+    $newhead->replace( "Subject", $subject );
 
-	$newmessage = $model_message->dup();	# Make a full copy
-	
-	$newmessage->head($newhead);
-	
-	do_part($newmessage);
-	
-	send_message($newmessage);
+    $contenttype = $model_message->head->get("Content-Type");
+    chomp $contenttype;
+    $newhead->replace( "Content-Type", $contenttype );
+
+    $newmessage = $model_message->dup();    # Make a full copy
+
+    $newmessage->head($newhead);
+
+    do_part($newmessage);
+
+    send_message($newmessage);
 
     LOG( $LOG_DETAIL, "build_message: stop" );
 }
@@ -267,12 +274,13 @@ sub cleanup_message() {
 # Template processing
 
 sub init_template() {
-	LOG($LOG_DETAIL, "init_template: start");
-	
-	$template = Template->new()
-		or LOG($LOG_CRITICAL, "init_template: $Template::ERROR"); # Does not return
+    LOG( $LOG_DETAIL, "init_template: start" );
 
-	LOG($LOG_DETAIL, "init_template: stop");
+    $template = Template->new()
+      or LOG( $LOG_CRITICAL, "init_template: $Template::ERROR" )
+      ;    # Does not return
+
+    LOG( $LOG_DETAIL, "init_template: stop" );
 }
 
 sub apply_template($) {
@@ -302,11 +310,11 @@ sub apply_template($) {
 }
 
 sub cleanup_template() {
-	LOG($LOG_DETAIL, "cleanup_template: start");
-	
-	$template = undef;
+    LOG( $LOG_DETAIL, "cleanup_template: start" );
 
-	LOG($LOG_DETAIL, "cleanup_template: stop");
+    $template = undef;
+
+    LOG( $LOG_DETAIL, "cleanup_template: stop" );
 }
 
 # CSV input
@@ -410,39 +418,42 @@ sub init_sendmail() {
 sub send_message($) {
     LOG( $LOG_DETAIL, "send_message: start" );
 
-	my ($message, $sender_args);
-	
-	$message = shift(@_);
+    my ( $message, $sender_args );
 
-	$sender_args = {
-		transport => $smtp_transport
-	};
-	
-	$$sender_args{from} = $smtp_bounce;
-	
-	if (Email::Sender::Simple->try_to_send($message, $sender_args)) {
-		$sent_messages++;
-	} else {
-	  my $sentto = $message->get("To");
-	  chomp $sentto;
-	  LOG($LOG_IMPORTANT, "send_message: email to $sentto failed");
-	  $message->print_header(\*STDERR);
-	}
-	
+    $message = shift(@_);
+
+    $sender_args = { transport => $smtp_transport };
+
+    $$sender_args{from} = $smtp_bounce;
+
+    try sub {
+        Email::Sender::Simple->send( $message, $sender_args );
+      }, catch_when 'Email::Sender::Failure' => sub {
+        my $sentto = $message->get("To");
+        chomp $sentto;
+        LOG( $LOG_URGENT,
+            "send_message: email to $sentto failed, Error=" . $_->message );
+        $send_errors++;
+      },
+      then sub {
+        $sent_messages++;
+      };
+
     LOG( $LOG_DETAIL, "send_message: stop" );
 }
 
 sub cleanup_sendmail() {
     LOG( $LOG_DETAIL, "cleanup_sendmail: start" );
-    
-    my ($delivery, $delivered);
-    
-    if ($DEBUG) {	# Dump test results
-    $delivered = $smtp_transport->delivery_count();
-    	LOG($LOG_DEBUG, "cleanup_sendmail: Delivery count: $delivered");
-		foreach $delivery ($smtp_transport->deliveries) {
-			LOG($LOG_DEBUG, "cleanup_sendmail: Delivery: " . Dumper($delivery));
-		}    
+
+    my ( $delivery, $delivered );
+
+    if ($DEBUG) {    # Dump test results
+        $delivered = $smtp_transport->delivery_count();
+        LOG( $LOG_DEBUG, "cleanup_sendmail: Delivery count: $delivered" );
+        foreach $delivery ( $smtp_transport->deliveries ) {
+            LOG( $LOG_DEBUG,
+                "cleanup_sendmail: Delivery: " . Dumper($delivery) );
+        }
     }
 
     $smtp_transport->disconnect() if ( $smtp_transport->can("disconnect") );
@@ -475,10 +486,10 @@ sub process_recipient() {
                 ${$input_record}{$email_hdr}
             )
         );
-        
+
         my $msgout;
-        
-		send_message($msgout) if ($msgout = build_message($input_record)) ;
+
+        send_message($msgout) if ( $msgout = build_message($input_record) );
 
     } else {
         LOG(
@@ -528,8 +539,9 @@ cleanup_sendmail();
 cleanup_list();
 cleanup_message();
 
-print "Input records: $input_records\nMessages sent: $sent_messages\n";
+print "Input records: $input_records\nMessages sent: $sent_messages\n**Send errors: $send_errors\n";
 LOG( $LOG_IMPORTANT, "Input records: $input_records" );
 LOG( $LOG_IMPORTANT, "Messages sent: $sent_messages" );
+LOG( $LOG_IMPORTANT, "**Send errors: $send_errors" );
 
 cleanup_log();
