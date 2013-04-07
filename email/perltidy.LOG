@@ -12,13 +12,53 @@ in:out indent c b  nesting   code + messages; (messages begin with >>>)
 lines  levels i k            (code begins with one '.' per indent level)
 ------  ----- - - --------   -------------------------------------------
 L2:1     i2:1 0 0 {          >>>Start indentation disagreement: input=2; output=1
-L22:1    i2:0 1 1 {          >>>Last line
+L9:1     i16:8 0 0 {([({[({   >>>Start multi-line quote or pattern ending in '
+L12:16   i0:10 1 0 (4 [2 {4   >>>Line length exceeded by 139 characters
+L25:29   i0:10 1 0 (4 [2 {4   >>>End of multi-line quote or pattern
+L33:32   i23:10 0 0 (4 [2 {4   >>>Start multi-line quote or pattern ending in '
+L34:32   i28:11 0 0 (4 [3 {4   >>>End of multi-line quote or pattern
+L35:42   i0:11 1 0 (4 [3 {4   >>>Start multi-line quote or pattern ending in '
+L37:44   i2:11 1 0 (4 [3 {4   >>>Embedded tabs in quote or pattern
+L37:44   i2:11 1 0 (4 [3 {4   >>>End of multi-line quote or pattern
+L50:46   i23:10 0 0 (4 [2 {4   ..........'mail_hdr_mail_from' => ' ....
+L61:46   i23:10 0 0 (4 [2 {4   >>>Start multi-line quote or pattern ending in '
+L62:46   i28:11 0 0 (4 [3 {4   >>>Line length exceeded by 735 characters
+L62:46   i28:11 0 0 (4 [3 {4   >>>End of multi-line quote or pattern
+L63:86   i0:11 1 0 (4 [3 {4   >>>Start multi-line quote or pattern ending in '
+L65:88   i2:11 1 0 (4 [3 {4   >>>Embedded tabs in quote or pattern
+L65:88   i2:11 1 0 (4 [3 {4   >>>End of multi-line quote or pattern
+L82:90   i9:5 0 0 {([({      >>>Start multi-line quote or pattern ending in '
+L83:90   i14:6 0 0 {([({[     >>>End of multi-line quote or pattern
+L92:118  i17:7 0 0 {([({({    >>>Start multi-line quote or pattern ending in '
+L93:118  i22:8 0 0 {([({({[   >>>End of multi-line quote or pattern
+L94:126  i0:8 1 0 {([({({[   >>>Start multi-line quote or pattern ending in '
+L95:126  i22:8 0 0 {([({({[   >>>End of multi-line quote or pattern
+L96:128  i0:8 1 0 {([({({[   >>>Start multi-line quote or pattern ending in '
+L97:128  i22:8 0 0 {([({({[   >>>End of multi-line quote or pattern
+L98:130  i0:8 1 0 {([({({[   >>>Start multi-line quote or pattern ending in '
+L99:130  i22:8 0 0 {([({({[   >>>End of multi-line quote or pattern
+L100:132 i0:8 1 0 {([({({[   ........',
+L100:132 i0:8 1 0 {([({({[   >>>Start multi-line quote or pattern ending in '
+L102:134 i0:8 1 0 {([({({[   >>>End of multi-line quote or pattern
+L137:136 i2:0 1 1 {          >>>Last line
+
+2 quotes or patterns had embedded tabs:
+This means the display of this script could vary with device or software
+  First at input line 37
+   Last at input line 65
 
 First indentation disagreement seen at input line 2
 Ending with indentation disagreement which started at input line 2
 Note: Indentation disagreement detection is not accurate for outdenting and -lp.
 
-No lines exceeded 80 characters
-  Maximum output line length was 55 at line 6
+6 long lines were outdented:
+  First at output line 41
+   Last at output line 129
+  use -noll to prevent outdenting, -l=n to increase line length
+
+2 output lines exceeded 80 characters:
+ First at line 16 by 139 characters
+ Maximum at line 75 by 735 characters
+ Last at line 75 by 735 characters
 Suggest including 'use warnings;'
 Suggest including 'use strict;'

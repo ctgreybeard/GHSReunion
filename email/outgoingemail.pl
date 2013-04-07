@@ -39,7 +39,7 @@ my $fname_hdr    = "Addr1";
 # Logging interface
 use Log::Trivial;
 my $logger;
-my $loglevel = 0;
+my $loglevel = 4;
 my $logfile;
 
 # Define the logging levels
@@ -161,11 +161,11 @@ sub init_log() {
 
     $logger->set_log_level($loglevel) if ($loglevel);
 
-    LOG( $LOG_NORMAL, "init_log: done" );
+    LOG( $LOG_DETAIL, "init_log: done" );
 }
 
 sub cleanup_log() {
-    LOG( $LOG_NORMAL, "cleanup_log: start" );
+    LOG( $LOG_DETAIL, "cleanup_log: start" );
 
     $logger = undef;
 }
@@ -173,7 +173,7 @@ sub cleanup_log() {
 # MIME message
 
 sub init_message() {
-    LOG( $LOG_NORMAL, "init_message: start" );
+    LOG( $LOG_DETAIL, "init_message: start" );
     
     LOG( $LOG_CRITICAL, "init_message: message file not specified" )
       unless ($model_message_file);
@@ -202,11 +202,11 @@ sub init_message() {
 	LOG($LOG_CRITICAL, "init_message: Model message has no Content-type")
 		unless ($model_message->head->get("Content-Type"))	;	
 
-    LOG( $LOG_NORMAL, "init_message: stop" );
+    LOG( $LOG_DETAIL, "init_message: stop" );
 }
 
 sub build_message($) {
-    LOG( $LOG_NORMAL, "build_message: start" );
+    LOG( $LOG_DETAIL, "build_message: start" );
     
     sub do_part($);
     
@@ -252,31 +252,31 @@ sub build_message($) {
 	
 	send_message($newmessage);
 
-    LOG( $LOG_NORMAL, "build_message: stop" );
+    LOG( $LOG_DETAIL, "build_message: stop" );
 }
 
 sub cleanup_message() {
-    LOG( $LOG_NORMAL, "cleanup_message: start" );
+    LOG( $LOG_DETAIL, "cleanup_message: start" );
 
     $mime_parser->filer->purge();
     $mime_parser = undef;
 
-    LOG( $LOG_NORMAL, "cleanup_message: stop" );
+    LOG( $LOG_DETAIL, "cleanup_message: stop" );
 }
 
 # Template processing
 
 sub init_template() {
-	LOG($LOG_NORMAL, "init_template: start");
+	LOG($LOG_DETAIL, "init_template: start");
 	
 	$template = Template->new()
 		or LOG($LOG_CRITICAL, "init_template: $Template::ERROR"); # Does not return
 
-	LOG($LOG_NORMAL, "init_template: stop");
+	LOG($LOG_DETAIL, "init_template: stop");
 }
 
 sub apply_template($) {
-    LOG( $LOG_NORMAL, "apply_template: start" );
+    LOG( $LOG_DETAIL, "apply_template: start" );
 
     # Apply the template to the MIME::Entity
 
@@ -298,21 +298,21 @@ sub apply_template($) {
 
     $entity->bodyhandle($newbody);
 
-    LOG( $LOG_NORMAL, "apply_template: stop" );
+    LOG( $LOG_DETAIL, "apply_template: stop" );
 }
 
 sub cleanup_template() {
-	LOG($LOG_NORMAL, "cleanup_template: start");
+	LOG($LOG_DETAIL, "cleanup_template: start");
 	
 	$template = undef;
 
-	LOG($LOG_NORMAL, "cleanup_template: stop");
+	LOG($LOG_DETAIL, "cleanup_template: stop");
 }
 
 # CSV input
 
 sub init_list() {
-    LOG( $LOG_NORMAL, "init_list: start" );
+    LOG( $LOG_DETAIL, "init_list: start" );
 
     LOG( $LOG_CRITICAL, "CSV file name not specified" )
       unless ($csv_file_name);    # Does not return
@@ -338,7 +338,7 @@ sub init_list() {
 
     LOG( $LOG_DEBUG, "init_list: header row: " . join( ',', @headerrow ) );
 
-    LOG( $LOG_NORMAL, "init_list: stop" );
+    LOG( $LOG_DETAIL, "init_list: stop" );
 }
 
 sub get_list_entry() {
@@ -356,7 +356,7 @@ sub get_list_entry() {
         $return_val = 1;
     } else {
         if ( $csv_reader->eof ) {
-            LOG( $LOG_NORMAL, "get_list_entry: end-of-file" );
+            LOG( $LOG_DEBUG, "get_list_entry: end-of-file" );
             $return_val = undef;
         } else {
             LOG( $LOG_CRITICAL,
@@ -371,23 +371,23 @@ sub get_list_entry() {
 }
 
 sub cleanup_list() {
-    LOG( $LOG_NORMAL, "cleanup_list: start" );
+    LOG( $LOG_DETAIL, "cleanup_list: start" );
 
     $csv_reader = undef;
 
     close $csv_file_handle;
 
-    LOG( $LOG_NORMAL, "cleanup_list: stop" );
+    LOG( $LOG_DETAIL, "cleanup_list: stop" );
 }
 
 # Sending mail
 
 sub init_sendmail() {
-    LOG( $LOG_NORMAL, "init_sendmail: start" );
+    LOG( $LOG_DETAIL, "init_sendmail: start" );
 
     if ($DEBUG) {
         $smtp_transport = Email::Sender::Transport::Test->new();
-        LOG( $LOG_DEBUG, "init_sendmail: Running TEST transport" );
+        LOG( $LOG_PRIORITY, "init_sendmail: Running TEST transport" );
     } else {
         $smtp_transport = Email::Sender::Transport::SMTP::Persistent->new(
             {
@@ -398,17 +398,17 @@ sub init_sendmail() {
                 helo          => "ghs64reunion.org",
             }
         );
-        LOG( $LOG_DEBUG, "init_sendmail: Running SMTP transport" );
+        LOG( $LOG_PRIORITY, "init_sendmail: Running SMTP transport" );
     }
 
     LOG( $LOG_CRITICAL, "init_sendmail: Cannot create Transport" )
       unless ($smtp_transport);
 
-    LOG( $LOG_NORMAL, "init_sendmail: stop" );
+    LOG( $LOG_DETAIL, "init_sendmail: stop" );
 }
 
 sub send_message($) {
-    LOG( $LOG_NORMAL, "send_message: start" );
+    LOG( $LOG_DETAIL, "send_message: start" );
 
 	my ($message, $sender_args);
 	
@@ -423,14 +423,17 @@ sub send_message($) {
 	if (Email::Sender::Simple->try_to_send($message, $sender_args)) {
 		$sent_messages++;
 	} else {
-	  LOG($LOG_IMPORTANT, "send_message: email to " . $message->get("To") . " failed");
+	  my $sentto = $message->get("To");
+	  chomp $sentto;
+	  LOG($LOG_IMPORTANT, "send_message: email to $sentto failed");
+	  $message->print_header(\*STDERR);
 	}
 	
-    LOG( $LOG_NORMAL, "send_message: stop" );
+    LOG( $LOG_DETAIL, "send_message: stop" );
 }
 
 sub cleanup_sendmail() {
-    LOG( $LOG_NORMAL, "cleanup_sendmail: start" );
+    LOG( $LOG_DETAIL, "cleanup_sendmail: start" );
     
     my ($delivery, $delivered);
     
@@ -445,13 +448,13 @@ sub cleanup_sendmail() {
     $smtp_transport->disconnect() if ( $smtp_transport->can("disconnect") );
     $smtp_transport = undef;
 
-    LOG( $LOG_NORMAL, "cleanup_sendmail: stop" );
+    LOG( $LOG_DETAIL, "cleanup_sendmail: stop" );
 }
 
 # This does the main work
 
 sub process_recipient() {
-    LOG( $LOG_NORMAL, "process_recipient: start" );
+    LOG( $LOG_DETAIL, "process_recipient: start" );
 
     my $reason;
 
@@ -465,7 +468,7 @@ sub process_recipient() {
 
     unless ($reason) {
         LOG(
-            $LOG_DETAIL,
+            $LOG_NORMAL,
             sprintf(
                 "Sending mail to \"%s\" at \"%s\" <%s>",
                 ${$input_record}{$gname_hdr}, ${$input_record}{$fname_hdr},
@@ -479,7 +482,7 @@ sub process_recipient() {
 
     } else {
         LOG(
-            $LOG_DETAIL,
+            $LOG_NORMAL,
             sprintf(
                 "NOT sending email to \"%s\", %s",
                 ${$input_record}{$fname_hdr}, $reason
@@ -487,7 +490,7 @@ sub process_recipient() {
         );
     }
 
-    LOG( $LOG_NORMAL, "process_recipient: stop" );
+    LOG( $LOG_DETAIL, "process_recipient: stop" );
 }
 
 # Process email for GHS Class of '64 50th reunion
