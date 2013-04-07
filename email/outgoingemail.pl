@@ -539,7 +539,8 @@ cleanup_sendmail();
 cleanup_list();
 cleanup_message();
 
-print "Input records: $input_records\nMessages sent: $sent_messages\n**Send errors: $send_errors\n";
+print
+"Input records: $input_records\nMessages sent: $sent_messages\n**Send errors: $send_errors\n";
 LOG( $LOG_IMPORTANT, "Input records: $input_records" );
 LOG( $LOG_IMPORTANT, "Messages sent: $sent_messages" );
 LOG( $LOG_IMPORTANT, "**Send errors: $send_errors" );
