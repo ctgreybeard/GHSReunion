@@ -57,7 +57,7 @@ sub LOG($$) {
     $logger->write( level => $lvl, comment => "($lvl) $msg" );
 
     die(
-"Logging failed, cannot continue: attempted to log ($lvl)\"$msg\", error="
+        "Logging failed, cannot continue: attempted to log ($lvl)\"$msg\", error="
           . $logger->get_error()
           . "\n" )
       if $logger->get_error();
@@ -121,6 +121,10 @@ my $send_errors   = 0;
 # Useful stuff
 my $DEBUG;
 
+# Message modification
+my $subjectprefix = "";
+my $subjectsuffix = "";
+
 # Command options
 use Getopt::Long;
 my %opts = (
@@ -140,8 +144,15 @@ my %opts = (
     "GivenName"   => \$gname_hdr,
     "Addr1"       => \$fname_hdr,
 
+    # message modification
+    "Subject-Prefix=s" => \$subjectprefix,
+    "Subject-Suffix=s" => \$subjectsuffix,
+
     # Debugging
-    'DEBUG!' => \$DEBUG,
+    'DEBUG!' => sub {
+        $DEBUG++;
+        $loglevel = $LOG_DEBUG;
+    },
 );
 
 GetOptions(%opts) or die "Command options incorrect: $!\n";
@@ -245,6 +256,7 @@ sub build_message($) {
 
     $subject = $model_message->head->get("Subject");
     chomp $subject;
+    $subject = $subjectprefix . $subject . $subjectsuffix;
     $newhead->replace( "Subject", $subject );
 
     $contenttype = $model_message->head->get("Content-Type");
@@ -540,7 +552,7 @@ cleanup_list();
 cleanup_message();
 
 print
-"Input records: $input_records\nMessages sent: $sent_messages\n**Send errors: $send_errors\n";
+  "Input records: $input_records\nMessages sent: $sent_messages\n**Send errors: $send_errors\n";
 LOG( $LOG_IMPORTANT, "Input records: $input_records" );
 LOG( $LOG_IMPORTANT, "Messages sent: $sent_messages" );
 LOG( $LOG_IMPORTANT, "**Send errors: $send_errors" );

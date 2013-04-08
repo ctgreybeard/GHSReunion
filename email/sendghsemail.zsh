@@ -3,10 +3,12 @@
 csvfile=
 msgfile=
 logfile=
+prefix=()
+suffix=()
 debug=
-help="Usage: $0 [-d | -t] [-a csvfile] [-m msgfile] [-l logfile]"
+help="Usage: $0 [-d | -t] [-a Addressfile] [-m Msgfile] [-l Logfile] [-p subjectPrefix] [-s subjectSuffix]"
 
-while getopts dtha:m:l: myarg; do
+while getopts dtha:m:l:p:s: myarg; do
     # print -u2 "Option: $myarg, OPTIND=$OPTIND, OPTARG=$OPTARG"
     case $myarg in
     	'h' )
@@ -34,6 +36,16 @@ while getopts dtha:m:l: myarg; do
     		;;
     	'l' )
     		logfile=$OPTARG
+    		;;
+    	'p' )
+    		prefix=("--subject-prefix" "$OPTARG")
+    		print "Prefix"
+    		print -l -- $prefix
+    		;;
+    	's' )
+    		suffix=("--subject-suffix" "$OPTARG")
+    		print "Suffix"
+    		print -l -- $suffix
     		;;
     	':'|'?' )
     		print -u2 "Quitting on option error";
@@ -107,6 +119,6 @@ read ok\?'OK? [Yn]'
 
 if [[ ( $ok == "y" ) || ( $ok == "Y" ) || ( $ok == "" ) ]]; then
 
-	perl ./outgoingemail.pl  --logfile "$logfile" --csvfile "$csvfile"  --message "$msgfile" $debug
+	perl ./outgoingemail.pl  --logfile "$logfile" --csvfile "$csvfile"  --message "$msgfile" "$prefix[@]" "$suffix[@]" $debug
 
 fi
