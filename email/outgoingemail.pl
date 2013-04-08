@@ -43,13 +43,15 @@ my $loglevel = 4;
 my $logfile;
 
 # Define the logging levels
-my $LOG_CRITICAL  = 0;
-my $LOG_URGENT    = 1;
-my $LOG_PRIORITY  = 2;
-my $LOG_IMPORTANT = 3;
-my $LOG_NORMAL    = 4;
-my $LOG_DETAIL    = 5;
-my $LOG_DEBUG     = 6;
+use constant {
+	LOG_CRITICAL  => 0,
+	LOG_URGENT    => 1,
+	LOG_PRIORITY  => 2,
+	LOG_IMPORTANT => 3,
+	LOG_NORMAL    => 4,
+	LOG_DETAIL    => 5,
+	LOG_DEBUG     => 6,
+};
 
 sub LOG($$) {
     my ( $lvl, $msg ) = @_;
@@ -62,7 +64,7 @@ sub LOG($$) {
           . "\n" )
       if $logger->get_error();
 
-    die("FATAL: $msg\n") if ( $lvl == $LOG_CRITICAL );
+    die("FATAL: $msg\n") if ( $lvl == LOG_CRITICAL );
 }
 
 # Testing
@@ -151,7 +153,7 @@ my %opts = (
     # Debugging
     'DEBUG!' => sub {
         $DEBUG++;
-        $loglevel = $LOG_DEBUG;
+        $loglevel = LOG_DEBUG;
     },
 );
 
@@ -173,12 +175,18 @@ sub init_log() {
     # Process options
 
     $logger->set_log_level($loglevel) if ($loglevel);
+    
+    LOG(LOG_IMPORTANT, "Address file  =$csv_file_name");
+    LOG(LOG_IMPORTANT, "Message file  =$model_message_file");
+    LOG(LOG_IMPORTANT, "Subject prefix=$subjectprefix");
+    LOG(LOG_IMPORTANT, "Subject suffix=$subjectsuffix");
+    LOG(LOG_IMPORTANT, "DEBUG         =$DEBUG");
 
-    LOG( $LOG_DETAIL, "init_log: done" );
+    LOG( LOG_DETAIL, "init_log: done" );
 }
 
 sub cleanup_log() {
-    LOG( $LOG_DETAIL, "cleanup_log: start" );
+    LOG( LOG_DETAIL, "cleanup_log: start" );
 
     $logger = undef;
 }
@@ -186,9 +194,9 @@ sub cleanup_log() {
 # MIME message
 
 sub init_message() {
-    LOG( $LOG_DETAIL, "init_message: start" );
+    LOG( LOG_DETAIL, "init_message: start" );
 
-    LOG( $LOG_CRITICAL, "init_message: message file not specified" )
+    LOG( LOG_CRITICAL, "init_message: message file not specified" )
       unless ($model_message_file);
 
     # Create the MIME message
@@ -205,28 +213,28 @@ sub init_message() {
 
     if ($error) {    ### Cleanup all files created by the parse:
         $mime_parser->filer->purge();
-        LOG( $LOG_CRITICAL, "init_message: message parse error: $error" )
+        LOG( LOG_CRITICAL, "init_message: message parse error: $error" )
           ;          # Does not return
     }
 
-    LOG( $LOG_CRITICAL, "init_message: Model message has no Subject" )
+    LOG( LOG_CRITICAL, "init_message: Model message has no Subject" )
       unless ( $model_message->head->get("Subject") );
 
-    LOG( $LOG_CRITICAL, "init_message: Model message has no Content-type" )
+    LOG( LOG_CRITICAL, "init_message: Model message has no Content-type" )
       unless ( $model_message->head->get("Content-Type") );
 
-    LOG( $LOG_DETAIL, "init_message: stop" );
+    LOG( LOG_DETAIL, "init_message: stop" );
 }
 
 sub build_message($) {
-    LOG( $LOG_DETAIL, "build_message: start" );
+    LOG( LOG_DETAIL, "build_message: start" );
 
     sub do_part($);
 
     sub do_part($)
     {    # This processes each part and applies the template if necessary
         my $this_part = shift(@_);
-        LOG( $LOG_DEBUG, "do_part found: " . $this_part->effective_type() );
+        LOG( LOG_DEBUG, "do_part found: " . $this_part->effective_type() );
         if ( $this_part->parts()
           )    # If it has parts then process those recursively
         {
@@ -271,32 +279,32 @@ sub build_message($) {
 
     send_message($newmessage);
 
-    LOG( $LOG_DETAIL, "build_message: stop" );
+    LOG( LOG_DETAIL, "build_message: stop" );
 }
 
 sub cleanup_message() {
-    LOG( $LOG_DETAIL, "cleanup_message: start" );
+    LOG( LOG_DETAIL, "cleanup_message: start" );
 
     $mime_parser->filer->purge();
     $mime_parser = undef;
 
-    LOG( $LOG_DETAIL, "cleanup_message: stop" );
+    LOG( LOG_DETAIL, "cleanup_message: stop" );
 }
 
 # Template processing
 
 sub init_template() {
-    LOG( $LOG_DETAIL, "init_template: start" );
+    LOG( LOG_DETAIL, "init_template: start" );
 
     $template = Template->new()
-      or LOG( $LOG_CRITICAL, "init_template: $Template::ERROR" )
+      or LOG( LOG_CRITICAL, "init_template: $Template::ERROR" )
       ;    # Does not return
 
-    LOG( $LOG_DETAIL, "init_template: stop" );
+    LOG( LOG_DETAIL, "init_template: stop" );
 }
 
 sub apply_template($) {
-    LOG( $LOG_DETAIL, "apply_template: start" );
+    LOG( LOG_DETAIL, "apply_template: start" );
 
     # Apply the template to the MIME::Entity
 
@@ -307,7 +315,7 @@ sub apply_template($) {
     $oldbodytext = $entity->bodyhandle->as_string();
 
     $template->process( \$oldbodytext, $input_record, \$newbodytext )
-      or LOG( $LOG_CRITICAL,
+      or LOG( LOG_CRITICAL,
         "apply_template: Template process error: $template->error()" );
 
     $newbody = MIME::Body::InCore->new();
@@ -318,51 +326,51 @@ sub apply_template($) {
 
     $entity->bodyhandle($newbody);
 
-    LOG( $LOG_DETAIL, "apply_template: stop" );
+    LOG( LOG_DETAIL, "apply_template: stop" );
 }
 
 sub cleanup_template() {
-    LOG( $LOG_DETAIL, "cleanup_template: start" );
+    LOG( LOG_DETAIL, "cleanup_template: start" );
 
     $template = undef;
 
-    LOG( $LOG_DETAIL, "cleanup_template: stop" );
+    LOG( LOG_DETAIL, "cleanup_template: stop" );
 }
 
 # CSV input
 
 sub init_list() {
-    LOG( $LOG_DETAIL, "init_list: start" );
+    LOG( LOG_DETAIL, "init_list: start" );
 
-    LOG( $LOG_CRITICAL, "CSV file name not specified" )
+    LOG( LOG_CRITICAL, "CSV file name not specified" )
       unless ($csv_file_name);    # Does not return
 
-    LOG( $LOG_DETAIL, "init_list: create csv reader" );
+    LOG( LOG_DETAIL, "init_list: create csv reader" );
     $csv_reader = Text::CSV->new( { binary => 1, eol => $/ } );
-    LOG( $LOG_CRITICAL, "Cannot create CSV reader" )
+    LOG( LOG_CRITICAL, "Cannot create CSV reader" )
       unless ($csv_reader);       # Does not return
 
-    LOG( $LOG_DETAIL, "init_list: open $csv_file_name" );
+    LOG( LOG_DETAIL, "init_list: open $csv_file_name" );
     unless ( open $csv_file_handle, "<", $csv_file_name ) {
         my $emsg = $!;
-        LOG( $LOG_CRITICAL, "CSV file open failed: $emsg" );   # Does not return
+        LOG( LOG_CRITICAL, "CSV file open failed: $emsg" );   # Does not return
     }
 
     my $row;
     unless ( $row = $csv_reader->getline($csv_file_handle) )
     {    # First line is headers
-        LOG( $LOG_CRITICAL, "init_list: CSV file is empty" );  # Does not return
+        LOG( LOG_CRITICAL, "init_list: CSV file is empty" );  # Does not return
     }
     map { s/ +// } @$row;    # Remove spaces in labels, it's easier that way
     $csv_reader->column_names($row);
 
-    LOG( $LOG_DEBUG, "init_list: header row: " . join( ',', @headerrow ) );
+    LOG( LOG_DEBUG, "init_list: header row: " . join( ',', @headerrow ) );
 
-    LOG( $LOG_DETAIL, "init_list: stop" );
+    LOG( LOG_DETAIL, "init_list: stop" );
 }
 
 sub get_list_entry() {
-    LOG( $LOG_DETAIL, "get_list_entry: start" );
+    LOG( LOG_DETAIL, "get_list_entry: start" );
 
     my $return_val;
 
@@ -376,38 +384,38 @@ sub get_list_entry() {
         $return_val = 1;
     } else {
         if ( $csv_reader->eof ) {
-            LOG( $LOG_DEBUG, "get_list_entry: end-of-file" );
+            LOG( LOG_DEBUG, "get_list_entry: end-of-file" );
             $return_val = undef;
         } else {
-            LOG( $LOG_CRITICAL,
+            LOG( LOG_CRITICAL,
                 "get_list_entry: error in input: " . $csv_reader->error_input )
               ;                                              # Does not return
         }
     }
 
-    LOG( $LOG_DETAIL, "get_list_entry: done" );
+    LOG( LOG_DETAIL, "get_list_entry: done" );
 
   return $return_val;
 }
 
 sub cleanup_list() {
-    LOG( $LOG_DETAIL, "cleanup_list: start" );
+    LOG( LOG_DETAIL, "cleanup_list: start" );
 
     $csv_reader = undef;
 
     close $csv_file_handle;
 
-    LOG( $LOG_DETAIL, "cleanup_list: stop" );
+    LOG( LOG_DETAIL, "cleanup_list: stop" );
 }
 
 # Sending mail
 
 sub init_sendmail() {
-    LOG( $LOG_DETAIL, "init_sendmail: start" );
+    LOG( LOG_DETAIL, "init_sendmail: start" );
 
     if ($DEBUG) {
         $smtp_transport = Email::Sender::Transport::Test->new();
-        LOG( $LOG_PRIORITY, "init_sendmail: Running TEST transport" );
+        LOG( LOG_PRIORITY, "init_sendmail: Running TEST transport" );
     } else {
         $smtp_transport = Email::Sender::Transport::SMTP::Persistent->new(
             {
@@ -418,17 +426,17 @@ sub init_sendmail() {
                 helo          => "ghs64reunion.org",
             }
         );
-        LOG( $LOG_PRIORITY, "init_sendmail: Running SMTP transport" );
+        LOG( LOG_PRIORITY, "init_sendmail: Running SMTP transport" );
     }
 
-    LOG( $LOG_CRITICAL, "init_sendmail: Cannot create Transport" )
+    LOG( LOG_CRITICAL, "init_sendmail: Cannot create Transport" )
       unless ($smtp_transport);
 
-    LOG( $LOG_DETAIL, "init_sendmail: stop" );
+    LOG( LOG_DETAIL, "init_sendmail: stop" );
 }
 
 sub send_message($) {
-    LOG( $LOG_DETAIL, "send_message: start" );
+    LOG( LOG_DETAIL, "send_message: start" );
 
     my ( $message, $sender_args );
 
@@ -440,10 +448,11 @@ sub send_message($) {
 
     try sub {
         Email::Sender::Simple->send( $message, $sender_args );
-      }, catch_when 'Email::Sender::Failure' => sub {
+      }, 
+      catch_when 'Email::Sender::Failure' => sub {
         my $sentto = $message->get("To");
         chomp $sentto;
-        LOG( $LOG_URGENT,
+        LOG( LOG_URGENT,
             "send_message: email to $sentto failed, Error=" . $_->message );
         $send_errors++;
       },
@@ -451,19 +460,19 @@ sub send_message($) {
         $sent_messages++;
       };
 
-    LOG( $LOG_DETAIL, "send_message: stop" );
+    LOG( LOG_DETAIL, "send_message: stop" );
 }
 
 sub cleanup_sendmail() {
-    LOG( $LOG_DETAIL, "cleanup_sendmail: start" );
+    LOG( LOG_DETAIL, "cleanup_sendmail: start" );
 
     my ( $delivery, $delivered );
 
     if ($DEBUG) {    # Dump test results
         $delivered = $smtp_transport->delivery_count();
-        LOG( $LOG_DEBUG, "cleanup_sendmail: Delivery count: $delivered" );
+        LOG( LOG_DEBUG, "cleanup_sendmail: Delivery count: $delivered" );
         foreach $delivery ( $smtp_transport->deliveries ) {
-            LOG( $LOG_DEBUG,
+            LOG( LOG_DEBUG,
                 "cleanup_sendmail: Delivery: " . Dumper($delivery) );
         }
     }
@@ -471,13 +480,13 @@ sub cleanup_sendmail() {
     $smtp_transport->disconnect() if ( $smtp_transport->can("disconnect") );
     $smtp_transport = undef;
 
-    LOG( $LOG_DETAIL, "cleanup_sendmail: stop" );
+    LOG( LOG_DETAIL, "cleanup_sendmail: stop" );
 }
 
 # This does the main work
 
 sub process_recipient() {
-    LOG( $LOG_DETAIL, "process_recipient: start" );
+    LOG( LOG_DETAIL, "process_recipient: start" );
 
     my $reason;
 
@@ -491,7 +500,7 @@ sub process_recipient() {
 
     unless ($reason) {
         LOG(
-            $LOG_NORMAL,
+            LOG_NORMAL,
             sprintf(
                 "Sending mail to \"%s\" at \"%s\" <%s>",
                 ${$input_record}{$gname_hdr}, ${$input_record}{$fname_hdr},
@@ -505,7 +514,7 @@ sub process_recipient() {
 
     } else {
         LOG(
-            $LOG_NORMAL,
+            LOG_NORMAL,
             sprintf(
                 "NOT sending email to \"%s\", %s",
                 ${$input_record}{$fname_hdr}, $reason
@@ -513,7 +522,7 @@ sub process_recipient() {
         );
     }
 
-    LOG( $LOG_DETAIL, "process_recipient: stop" );
+    LOG( LOG_DETAIL, "process_recipient: stop" );
 }
 
 # Process email for GHS Class of '64 50th reunion
@@ -553,8 +562,8 @@ cleanup_message();
 
 print
   "Input records: $input_records\nMessages sent: $sent_messages\n**Send errors: $send_errors\n";
-LOG( $LOG_IMPORTANT, "Input records: $input_records" );
-LOG( $LOG_IMPORTANT, "Messages sent: $sent_messages" );
-LOG( $LOG_IMPORTANT, "**Send errors: $send_errors" );
+LOG( LOG_IMPORTANT, "Input records: $input_records" );
+LOG( LOG_IMPORTANT, "Messages sent: $sent_messages" );
+LOG( LOG_IMPORTANT, "**Send errors: $send_errors" );
 
 cleanup_log();

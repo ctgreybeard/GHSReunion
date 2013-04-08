@@ -19,6 +19,7 @@ while getopts dtha:m:l:p:s: myarg; do
     		print -u2 "DEBUG mode"
     		debug=--DEBUG
     		logfile=sendghstest.log
+    		rm -f $logfile
     		;;
     	'a' )
     		csvfile=$OPTARG
@@ -115,6 +116,7 @@ read ok\?'OK? [Yn]'
 
 if [[ ( $ok == "y" ) || ( $ok == "Y" ) || ( $ok == "" ) ]]; then
 
+	print perl ./outgoingemail.pl  --logfile "$logfile" --csvfile "$csvfile"  --message "$msgfile" "$prefix[@]" "$suffix[@]" $debug
 	perl ./outgoingemail.pl  --logfile "$logfile" --csvfile "$csvfile"  --message "$msgfile" "$prefix[@]" "$suffix[@]" $debug
 
 fi
