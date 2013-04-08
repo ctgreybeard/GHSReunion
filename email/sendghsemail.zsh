@@ -39,13 +39,9 @@ while getopts dtha:m:l:p:s: myarg; do
     		;;
     	'p' )
     		prefix=("--subject-prefix" "$OPTARG")
-    		print "Prefix"
-    		print -l -- $prefix
     		;;
     	's' )
     		suffix=("--subject-suffix" "$OPTARG")
-    		print "Suffix"
-    		print -l -- $suffix
     		;;
     	':'|'?' )
     		print -u2 "Quitting on option error";
