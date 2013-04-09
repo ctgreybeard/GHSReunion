@@ -33,6 +33,7 @@ my $row_count    = 0;
 my $deceased_hdr = "Deceased";
 my $email_hdr    = "Email";
 my $bounce_hdr   = "EmailBounce";
+my $exclude_hdr  = "Exclude";
 my $gname_hdr    = "GivenName";
 my $fname_hdr    = "Addr1";
 
@@ -143,6 +144,7 @@ my %opts = (
     "Deceased"    => \$deceased_hdr,
     "Email"       => \$email_hdr,
     "EmailBounce" => \$bounce_hdr,
+    "Exclude"     => \$exclude_hdr,
     "GivenName"   => \$gname_hdr,
     "Addr1"       => \$fname_hdr,
 
@@ -180,7 +182,7 @@ sub init_log() {
     LOG(LOG_IMPORTANT, "Message file  =$model_message_file");
     LOG(LOG_IMPORTANT, "Subject prefix=$subjectprefix");
     LOG(LOG_IMPORTANT, "Subject suffix=$subjectsuffix");
-    LOG(LOG_IMPORTANT, "DEBUG         =$DEBUG");
+    LOG(LOG_IMPORTANT, "DEBUG         =" . ($DEBUG || "");
 
     LOG( LOG_DETAIL, "init_log: done" );
 }
@@ -469,6 +471,8 @@ sub cleanup_sendmail() {
     my ( $delivery, $delivered );
 
     if ($DEBUG) {    # Dump test results
+	$Data::Dumper::Indent = 1;	# Simplify the output
+	$Data::Dumper::Maxdepth = 5;	# Don't go too deep!
         $delivered = $smtp_transport->delivery_count();
         LOG( LOG_DEBUG, "cleanup_sendmail: Delivery count: $delivered" );
         foreach $delivery ( $smtp_transport->deliveries ) {
@@ -492,6 +496,8 @@ sub process_recipient() {
 
     if ( ${$input_record}{$email_hdr} =~ m/^\s*$/ ) {
         $reason = "No email address";
+    } elsif ( ${$input_record}{$exclude_hdr} !~ m/^\s*$/ ) {
+        $reason = "Requested to be excluded";
     } elsif ( ${$input_record}{$deceased_hdr} !~ m/^\s*$/ ) {
         $reason = "Marked as Deceased";
     } elsif ( ${$input_record}{$bounce_hdr} !~ m/^(?:v|\s*)$/i ) {

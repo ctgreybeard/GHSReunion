@@ -9,3 +9,6 @@ if [[ $infile == "" ]] {
 }
 
 egrep '^Surname,|^Ramsey,|^Annicelli,|^Cravens,|^Hall,|^Baird,|^Particelli,|^Pucci,|^Sherman,' $infile >$outfile
+
+print "Should be nine records"
+wc -l $outfile
