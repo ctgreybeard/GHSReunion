@@ -36,6 +36,7 @@ my $bounce_hdr   = "EmailBounce";
 my $exclude_hdr  = "Exclude";
 my $gname_hdr    = "GivenName";
 my $fname_hdr    = "Addr1";
+my $special_hdr  = "Special";
 
 # Logging interface
 use Log::Trivial;
@@ -45,13 +46,13 @@ my $logfile;
 
 # Define the logging levels
 use constant {
-	LOG_CRITICAL  => 0,
-	LOG_URGENT    => 1,
-	LOG_PRIORITY  => 2,
-	LOG_IMPORTANT => 3,
-	LOG_NORMAL    => 4,
-	LOG_DETAIL    => 5,
-	LOG_DEBUG     => 6,
+    LOG_CRITICAL  => 0,
+    LOG_URGENT    => 1,
+    LOG_PRIORITY  => 2,
+    LOG_IMPORTANT => 3,
+    LOG_NORMAL    => 4,
+    LOG_DETAIL    => 5,
+    LOG_DEBUG     => 6,
 };
 
 sub LOG($$) {
@@ -127,6 +128,7 @@ my $DEBUG;
 # Message modification
 my $subjectprefix = "";
 my $subjectsuffix = "";
+my $do_special;    # Process "special" column with these values
 
 # Command options
 use Getopt::Long;
@@ -147,10 +149,12 @@ my %opts = (
     "Exclude"     => \$exclude_hdr,
     "GivenName"   => \$gname_hdr,
     "Addr1"       => \$fname_hdr,
+    "Special"     => \$special_hdr,
 
     # message modification
     "Subject-Prefix=s" => \$subjectprefix,
     "Subject-Suffix=s" => \$subjectsuffix,
+    "Special=s"        => \$do_special,
 
     # Debugging
     'DEBUG!' => sub {
@@ -177,12 +181,13 @@ sub init_log() {
     # Process options
 
     $logger->set_log_level($loglevel) if ($loglevel);
-    
-    LOG(LOG_IMPORTANT, "Address file  =$csv_file_name");
-    LOG(LOG_IMPORTANT, "Message file  =$model_message_file");
-    LOG(LOG_IMPORTANT, "Subject prefix=$subjectprefix");
-    LOG(LOG_IMPORTANT, "Subject suffix=$subjectsuffix");
-    LOG(LOG_IMPORTANT, "DEBUG         =" . ($DEBUG || "");
+
+    LOG( LOG_IMPORTANT, "Address file  =$csv_file_name" );
+    LOG( LOG_IMPORTANT, "Message file  =$model_message_file" );
+    LOG( LOG_IMPORTANT, "Subject prefix=$subjectprefix" );
+    LOG( LOG_IMPORTANT, "Subject suffix=$subjectsuffix" );
+    LOG( LOG_IMPORTANT, "Special       =$do_special" );
+    LOG( LOG_IMPORTANT, "DEBUG         =" . ( $DEBUG || "" ) );
 
     LOG( LOG_DETAIL, "init_log: done" );
 }
@@ -355,13 +360,13 @@ sub init_list() {
     LOG( LOG_DETAIL, "init_list: open $csv_file_name" );
     unless ( open $csv_file_handle, "<", $csv_file_name ) {
         my $emsg = $!;
-        LOG( LOG_CRITICAL, "CSV file open failed: $emsg" );   # Does not return
+        LOG( LOG_CRITICAL, "CSV file open failed: $emsg" );    # Does not return
     }
 
     my $row;
     unless ( $row = $csv_reader->getline($csv_file_handle) )
     {    # First line is headers
-        LOG( LOG_CRITICAL, "init_list: CSV file is empty" );  # Does not return
+        LOG( LOG_CRITICAL, "init_list: CSV file is empty" );   # Does not return
     }
     map { s/ +// } @$row;    # Remove spaces in labels, it's easier that way
     $csv_reader->column_names($row);
@@ -434,6 +439,9 @@ sub init_sendmail() {
     LOG( LOG_CRITICAL, "init_sendmail: Cannot create Transport" )
       unless ($smtp_transport);
 
+    LOG( LOG_PRIORITY, "init_sendmail: Send Special to \"$do_special\"" )
+      if $do_special;
+
     LOG( LOG_DETAIL, "init_sendmail: stop" );
 }
 
@@ -450,8 +458,7 @@ sub send_message($) {
 
     try sub {
         Email::Sender::Simple->send( $message, $sender_args );
-      }, 
-      catch_when 'Email::Sender::Failure' => sub {
+      }, catch_when 'Email::Sender::Failure' => sub {
         my $sentto = $message->get("To");
         chomp $sentto;
         LOG( LOG_URGENT,
@@ -471,8 +478,8 @@ sub cleanup_sendmail() {
     my ( $delivery, $delivered );
 
     if ($DEBUG) {    # Dump test results
-	$Data::Dumper::Indent = 1;	# Simplify the output
-	$Data::Dumper::Maxdepth = 5;	# Don't go too deep!
+        $Data::Dumper::Indent   = 1;    # Simplify the output
+        $Data::Dumper::Maxdepth = 5;    # Don't go too deep!
         $delivered = $smtp_transport->delivery_count();
         LOG( LOG_DEBUG, "cleanup_sendmail: Delivery count: $delivered" );
         foreach $delivery ( $smtp_transport->deliveries ) {
@@ -496,12 +503,16 @@ sub process_recipient() {
 
     if ( ${$input_record}{$email_hdr} =~ m/^\s*$/ ) {
         $reason = "No email address";
+    } elsif ( ${$input_record}{$bounce_hdr} !~ m/^(?:v|\s*)$/i ) {
+        $reason = "Email not valid or bounced";
+    } elsif ( $do_special
+        && ${$input_record}{$special_hdr} =~ m/^$do_special$/i )
+    {    # Special email processing ...
+        $reason = undef;    # Mark for sending this time
     } elsif ( ${$input_record}{$exclude_hdr} !~ m/^\s*$/ ) {
         $reason = "Requested to be excluded";
     } elsif ( ${$input_record}{$deceased_hdr} !~ m/^\s*$/ ) {
         $reason = "Marked as Deceased";
-    } elsif ( ${$input_record}{$bounce_hdr} !~ m/^(?:v|\s*)$/i ) {
-        $reason = "Email not valid or bounced";
     }
 
     unless ($reason) {
@@ -566,8 +577,8 @@ cleanup_sendmail();
 cleanup_list();
 cleanup_message();
 
-print
-  "Input records: $input_records\nMessages sent: $sent_messages\n**Send errors: $send_errors\n";
+print "Input records: $input_records\n", "Messages sent: $sent_messages\n",
+  "**Send errors: $send_errors\n";
 LOG( LOG_IMPORTANT, "Input records: $input_records" );
 LOG( LOG_IMPORTANT, "Messages sent: $sent_messages" );
 LOG( LOG_IMPORTANT, "**Send errors: $send_errors" );
