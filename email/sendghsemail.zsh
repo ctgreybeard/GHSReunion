@@ -5,10 +5,11 @@ msgfile=
 logfile=
 prefix=()
 suffix=()
+special=()
 debug=
-help="Usage: $0 [-d | -t] [-a Addressfile] [-m Msgfile] [-l Logfile] [-p subjectPrefix] [-s subjectSuffix]"
+help="Usage: $0 [-d | -t] [-a Addressfile] [-m Msgfile] [-l Logfile] [-p subjectPrefix] [-s subjectSuffix] [-e spEcialvalue]"
 
-while getopts dtha:m:l:p:s: myarg; do
+while getopts dtha:m:l:p:s:e: myarg; do
     # print -u2 "Option: $myarg, OPTIND=$OPTIND, OPTARG=$OPTARG"
     case $myarg in
     	'h' )
@@ -43,12 +44,20 @@ while getopts dtha:m:l:p:s: myarg; do
     		;;
     	's' )
     		suffix=("--subject-suffix" "$OPTARG")
+		;;
+    	'e' )
+    		special=("--special" "$OPTARG")
     		;;
     	':'|'?' )
     		print -u2 "Quitting on option error";
     		exit 1;
     esac
 done
+
+if [[ $#@[$OPTIND,-1] -gt 0 ]] {
+    print -u2 -f "Found extra options: \"%s\", aborting!\n" "${(pj: :)@[$OPTIND,$(( OPTIND + 1 ))]}"
+    exit 1
+}
 
 while [[ $csvfile == "" || ! -r $csvfile ]] do
 	print -u2
@@ -112,11 +121,26 @@ if [[ $debug != "" ]] {
 	print -u2
 }
 
+if [[ $#prefix -ne 0 ]] {
+	print -u2 "Subject prefix = $prefix[2]"
+	print -u2
+}
+
+if [[ $#suffix -ne 0 ]] {
+	print -u2 "Subject suffix = $suffix[2]"
+	print -u2
+}
+
+if [[ $#special -ne 0 ]] {
+	print -u2 "Sending only to Special = $special[2]"
+	print -u2
+}
+
 read ok\?'OK? [Yn]'
 
 if [[ ( $ok == "y" ) || ( $ok == "Y" ) || ( $ok == "" ) ]]; then
 
-	print perl ./outgoingemail.pl  --logfile "$logfile" --csvfile "$csvfile"  --message "$msgfile" "$prefix[@]" "$suffix[@]" $debug
-	perl ./outgoingemail.pl  --logfile "$logfile" --csvfile "$csvfile"  --message "$msgfile" "$prefix[@]" "$suffix[@]" $debug
+	print perl ./outgoingemail.pl  --logfile "$logfile" --csvfile "$csvfile"  --message "$msgfile" "$prefix[@]" "$suffix[@]" "$special[@]" $debug
+	perl ./outgoingemail.pl  --logfile "$logfile" --csvfile "$csvfile"  --message "$msgfile" "$prefix[@]" "$suffix[@]" "$special[@]" $debug
 
 fi
