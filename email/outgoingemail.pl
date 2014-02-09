@@ -186,8 +186,8 @@ sub init_log() {
     LOG( LOG_IMPORTANT, "Message file  =$model_message_file" );
     LOG( LOG_IMPORTANT, "Subject prefix=$subjectprefix" );
     LOG( LOG_IMPORTANT, "Subject suffix=$subjectsuffix" );
-    LOG( LOG_IMPORTANT, "Special       =$do_special" );
-    LOG( LOG_IMPORTANT, "DEBUG         =" . ( $DEBUG || "" ) );
+    LOG( LOG_IMPORTANT, "Special       =" . ( $do_special || "" ) ); # Prevent warning
+    LOG( LOG_IMPORTANT, "DEBUG         =" . ( $DEBUG || "" ) ); # Prevent warning
 
     LOG( LOG_DETAIL, "init_log: done" );
 }
