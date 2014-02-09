@@ -149,7 +149,7 @@ my %opts = (
     "Exclude"     => \$exclude_hdr,
     "GivenName"   => \$gname_hdr,
     "Addr1"       => \$fname_hdr,
-    "Special"     => \$special_hdr,
+    "SpecialHdr"  => \$special_hdr,
 
     # message modification
     "Subject-Prefix=s" => \$subjectprefix,
@@ -499,7 +499,7 @@ sub cleanup_sendmail() {
 sub process_recipient() {
     LOG( LOG_DETAIL, "process_recipient: start" );
 
-    my $reason;
+    my $reason = 0;
 
     if ( ${$input_record}{$email_hdr} =~ m/^\s*$/ ) {
         $reason = "No email address";
@@ -508,7 +508,7 @@ sub process_recipient() {
     } elsif ( $do_special
         && ${$input_record}{$special_hdr} =~ m/^$do_special$/i )
     {    # Special email processing ...
-        $reason = undef;    # Mark for sending this time
+        $reason = 0;    # Mark for sending this time
     } elsif ( ${$input_record}{$exclude_hdr} !~ m/^\s*$/ ) {
         $reason = "Requested to be excluded";
     } elsif ( ${$input_record}{$deceased_hdr} !~ m/^\s*$/ ) {
