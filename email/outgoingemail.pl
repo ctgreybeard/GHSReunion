@@ -252,7 +252,8 @@ sub build_message($) {
             }
         }
     }
-    my ( $inrec, $newhead, $subject, $contenttype, $newmessage, $newparts );
+
+    my ( $inrec, $newhead, $subject, $contenttype, $newmessage, $newparts, $to_line, @addys, $addy );
 
     $inrec = shift(@_);
 
@@ -260,12 +261,19 @@ sub build_message($) {
 
     $newhead = MIME::Head->new();
 
-    $newhead->replace(
-        "To",
-        sprintf "\"%s\" <%s>",
-        ${$inrec}{$fname_hdr},
-        ${$inrec}{$email_hdr}
-    );
+	$to_line = "";
+
+	@addys = split /, */, ${$inrec}{$email_hdr};
+
+	foreach $addy ( @addys ) {
+		LOG( LOG_DEBUG, "build_message: email address: $addy" );
+		$to_line .= sprintf "\"%s\" <%s>, ", ${$inrec}{$fname_hdr}, $addy;
+	}
+
+	$to_line =~ s/, $//;	# Remove trailing separator
+	LOG( LOG_DEBUG, "build_message: To: $to_line" );
+
+    $newhead->replace( "To",       $to_line);
     $newhead->replace( "From",     $smtp_from );
     $newhead->replace( "Reply-To", $smtp_from );
 
