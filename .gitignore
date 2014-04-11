@@ -5,3 +5,6 @@
 # Backup files
 *.bak
 *.old
+
+# Forget about the test web site
+www/
