@@ -3,6 +3,9 @@
 *.swp
 .sass-cache/
 
+# compass generated ...
+css/
+
 # Backup files
 *.bak
 *.old
