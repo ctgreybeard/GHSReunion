@@ -1,0 +1,100 @@
+@interface UIColor (CustomPalette)
+/// Fire Engine Red color (FF0000)
++ (UIColor *) colorFireEngineRed;
+/// Pumpkin Orange color (FF7F00)
++ (UIColor *) colorPumpkinOrange;
+/// Bright Yellow color (FEFF00)
++ (UIColor *) colorBrightYellow;
+/// Bright Lime color (7FFF00)
++ (UIColor *) colorBrightLime;
+/// Bright Green color (00FF00)
++ (UIColor *) colorBrightGreen;
+/// Minty Green color (00FF7F)
++ (UIColor *) colorMintyGreen;
+/// Cyan color (00FEFF)
++ (UIColor *) colorCyan;
+/// Deep Sky Blue color (007FFF)
++ (UIColor *) colorDeepSkyBlue;
+/// Primary Blue color (0000FF)
++ (UIColor *) colorPrimaryBlue;
+/// Vivid Purple color (7F00FF)
++ (UIColor *) colorVividPurple;
+/// Bright Magenta color (FE00FF)
++ (UIColor *) colorBrightMagenta;
+/// Strong Pink color (FF007F)
++ (UIColor *) colorStrongPink;
+@end
+
+@implementation UIColor (CustomPalette)
+// Primary color: Fire Engine Red (FF0000)
++ (UIColor *) colorFireEngineRed
+{
+    return [UIColor colorWithRed:1.0000 green:0.0000 blue:0.0000 alpha:1.0000];
+}
+
+// Intermediate color: Pumpkin Orange (FF7F00)
++ (UIColor *) colorPumpkinOrange
+{
+    return [UIColor colorWithRed:1.0000 green:0.5000 blue:0.0000 alpha:1.0000];
+}
+
+// Intermediate color: Bright Yellow (FEFF00)
++ (UIColor *) colorBrightYellow
+{
+    return [UIColor colorWithRed:1.0000 green:1.0000 blue:0.0000 alpha:1.0000];
+}
+
+// Intermediate color: Bright Lime (7FFF00)
++ (UIColor *) colorBrightLime
+{
+    return [UIColor colorWithRed:0.5000 green:1.0000 blue:0.0000 alpha:1.0000];
+}
+
+// Triadic color: Bright Green (00FF00)
++ (UIColor *) colorBrightGreen
+{
+    return [UIColor colorWithRed:0.0000 green:1.0000 blue:0.0000 alpha:1.0000];
+}
+
+// Split complementary color: Minty Green (00FF7F)
++ (UIColor *) colorMintyGreen
+{
+    return [UIColor colorWithRed:0.0000 green:1.0000 blue:0.5000 alpha:1.0000];
+}
+
+// Complementary color: Cyan (00FEFF)
++ (UIColor *) colorCyan
+{
+    return [UIColor colorWithRed:0.0000 green:1.0000 blue:1.0000 alpha:1.0000];
+}
+
+// Split complementary color: Deep Sky Blue (007FFF)
++ (UIColor *) colorDeepSkyBlue
+{
+    return [UIColor colorWithRed:0.0000 green:0.5000 blue:1.0000 alpha:1.0000];
+}
+
+// Triadic color: Primary Blue (0000FF)
++ (UIColor *) colorPrimaryBlue
+{
+    return [UIColor colorWithRed:0.0000 green:0.0000 blue:1.0000 alpha:1.0000];
+}
+
+// Intermediate color: Vivid Purple (7F00FF)
++ (UIColor *) colorVividPurple
+{
+    return [UIColor colorWithRed:0.5000 green:0.0000 blue:1.0000 alpha:1.0000];
+}
+
+// Intermediate color: Bright Magenta (FE00FF)
++ (UIColor *) colorBrightMagenta
+{
+    return [UIColor colorWithRed:1.0000 green:0.0000 blue:1.0000 alpha:1.0000];
+}
+
+// Intermediate color: Strong Pink (FF007F)
++ (UIColor *) colorStrongPink
+{
+    return [UIColor colorWithRed:1.0000 green:0.0000 blue:0.5000 alpha:1.0000];
+}
+@end
