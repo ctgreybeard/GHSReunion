@@ -1,0 +1,20 @@
+<?php
+	startrow();
+	genblock("Karen", "Ramsey", "Waggoner", "Bethel, CT");
+	genblock("Linda", "Hall", "Esposito", "Norwalk, CT");
+	endrow();startrow();
+	genblock("Judy", "Annicelli", "Hamilton", "New Milford, CT");
+	genblock("Dale", "Cravens", "Litvany", "Bloomfield, NJ");
+	endrow();startrow();
+	genblock("Bonnie", "MacDougall", "Paradise", "Stratford, CT");
+	genblock("Marc", "", "Particelli", "Greenwich, CT");
+	endrow();startrow();
+	genblock("James", "", "Pucci", "Stamford, CT");
+	genblock("Michael", "", "Sherman", "");
+	endrow();startrow();
+	genblock("Christine", "Flink", "Varner", "Norwalk, CT");
+	genblock("Frederica (Ricky)", "Weiss", "Arcade", "Greenwich, CT");
+	endrow();startrow();
+	genblock("Richard David", "", "Chiapetta", "Greenwich, CT");
+	genblock("Michael", "", "D’Andrea", "Cos Cob, CT");
+	endrow();

@@ -7,10 +7,13 @@
  */
 
 /* Import Sass mixins, variables, Compass modules, etc. */
-@import "init";
+//@import "init";
+@import "compass/support";
+@import "compass/utilities/general/clearfix";
+@import "compass/css3";
 
 /* HTML element (SMACSS base) rules */
-@import "normalize";
+//@import "normalize";
 
 /* Layout rules */
 //@import "layouts/responsive";
@@ -18,9 +21,165 @@
 /* Component (SMACSS module) rules */
 //@import "components/misc";
 // Optionally, add your own components here.
-@import "print";
+//@import "print";
 
 /* SMACSS theme rules */
 /* @import "theme-A"; */
 /* @import "theme-B"; */
 
+$badgewidth: 101.6mm;
+$badgeheight: 76.2mm;
+
+$mh: 77.9mm;	// Measured row height
+$mw: 104mm;		// Measured column width
+
+$rh: $badgeheight * 2 - $mh;	// Row height with adjustment
+
+$cw: $badgewidth * 2 - $mw;	// Column width with adjustment
+
+$c1: 0mm;
+$c2: $cw;
+
+$r1: 0mm;
+
+$basefontsize: 6mm;
+$bigfontsize: $basefontsize * 1.8;
+$linefactor: 1.2;
+
+body {
+	border-collapse: collapse;
+	width: 204mm;
+}
+
+/* Utility classes */
+.wireframe {
+/* 	border: 1px solid RGB(182, 182, 182); */
+}
+
+// image headshot from yearbook
+.yb-headshot {
+	width: 500px;
+	height: 500px;
+}
+
+/* "Page" break block */
+.pb {
+/* 
+	height: 1mm;
+	width: 8in;
+ */
+	page-break-after: always;
+/* 	clear-after: both; */
+}
+
+.badge, .badge-row {
+	@include box-sizing(border-box);
+	height: $rh;
+}
+
+/* badge row */
+.badge-row {
+	width: 206mm;
+	position: relative;
+	page-break-inside: avoid;
+	clear: left;
+	display: block;
+}
+
+/* badge block */
+.badge {
+	width: $badgewidth;
+	padding: 5mm;
+	position: absolute;
+}
+
+.row1 {
+/* 	top: $r1; */
+}
+
+.row2 {
+/* 	top: $r2; */
+}
+
+.row3 {
+/* 	top: $r3; */
+}
+
+.badge1, .badge3, .badge5 {
+	top: $r1;
+	left: $c1;
+}
+
+.badge2, .badge4, .badge6 {
+	top: $r1;
+	left: $c2;
+}
+
+.fn, .ln, .city, .badge-header, .hs, .badge-footer {
+	position: absolute;
+}
+
+/* Badge header line */
+.badge-header {
+	font-size: 100%;
+	color: red;
+	left: 5mm;
+	top: 2.5mm;
+}
+
+/* Badge footer line */
+.badge-footer {
+	font-size: 100%;
+	color: green;
+	left: 5mm;
+	bottom: 2.5mm;
+}
+
+/* headshot block */
+.hs {
+	left: 10mm;
+	top: 10mm;
+	width: 4cm;
+	height: 4cm;
+}
+
+/* headshot image */
+.hs-img {
+	width: 4cm;
+	height: 4cm;
+}
+
+.fn, .ln, .city {
+	text-align: right;
+	right: 5mm;
+}
+
+.ln, .city {
+	font-size: $basefontsize;
+	line-height: $basefontsize * $linefactor;
+}
+
+/* First Name block */
+.fn {
+	bottom: 3.0cm;
+/* 	height: 1.5cm; */
+	width: 4.5cm;
+	font-size: $bigfontsize;
+	line-height: $bigfontsize * $linefactor;
+}
+
+/* Last name block */
+.ln {
+	top: 5.0cm;
+/* 	float: right; */
+	height: 1cm;
+	width: 9cm;
+}
+
+/* City block */
+.city {
+	top: 6.1cm;
+/* 	float: right; */
+	height: 1cm;
+	width: 9cm;
+}

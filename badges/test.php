@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- 	<base href="file:///Users/dad/Dropbox/Projects/GHSReunion/" /> -->
+	<meta charset="utf-8" />
+	<title>Badges</title>
+	<meta name="generator" content="BBEdit 10.5" />
+	<link href="../css/styles.css" rel="stylesheet" type="text/css" />
+	<!--[if IE]>
+		<link href="css/ie.css" media="screen, projection" rel="stylesheet" type="text/css" />
+	<![endif]-->
+</head>
+<body>
+<div class="page-box wireframe">
+<div class="badge wireframe">
+	<?php include 'badge-decoration.html'; ?>
+	<div class="hs wireframe">
+		<img src="../Photos/karenramseywaggoner-hs.png" class="hs-img" />
+	</div>
+	<div class="fn wireframe">
+		Karen
+	</div>
+	<div class="ln wireframe">
+		(Ramsey) Waggoner
+	</div>
+	<div class="city wireframe">
+		Bethel, CT
+	</div>
+</div>
+<div class="badge wireframe">
+	<?php include 'badge-decoration.html'; ?>
+	<div class="hs wireframe">
+		<img src="../Photos/lindahallesposito-hs.png" class="hs-img" />
+	</div>
+	<div class="fn wireframe">
+		Linda
+	</div>
+	<div class="ln wireframe">
+		(Hall) Esposito
+	</div>
+	<div class="city wireframe">
+		Norwalk, CT
+	</div>
+</div>
+<div class="badge wireframe">
+	<?php include 'badge-decoration.html'; ?>
+	<div class="hs wireframe">
+		<img src="../Photos/judyannecellihamilton-hs.png" class="hs-img" />
+	</div>
+	<div class="fn wireframe">
+		Judy
+	</div>
+	<div class="ln wireframe">
+		(Annecelli) Hamilton
+	</div>
+	<div class="city wireframe">
+		New Milford, CT
+	</div>
+</div>
+<div class="badge wireframe">
+	<?php include 'badge-decoration.html'; ?>
+	<div class="hs wireframe">
+		<img src="../Photos/dalecravenslitvany-hs.png" class="hs-img" />
+	</div>
+	<div class="fn wireframe">
+		Dale
+	</div>
+	<div class="ln wireframe">
+		(Cravens) Litvany
+	</div>
+	<div class="city wireframe">
+		Bloomfield, NJ
+	</div>
+</div>
+<div class="badge wireframe">
+	<?php include 'badge-decoration.html'; ?>
+	<div class="hs wireframe">
+		<img src="../Photos/bonniemacdougallparadise-hs.png" class="hs-img" />
+	</div>
+	<div class="fn wireframe">
+		Bonnie
+	</div>
+	<div class="ln wireframe">
+		(MacDougall) Paradise
+	</div>
+	<div class="city wireframe">
+		Stratford, CT
+	</div>
+</div>
+<div class="badge wireframe">
+	<?php include 'badge-decoration.html'; ?>
+	<div class="hs wireframe">
+		<img src="../Photos/marcparticelli-hs.png" class="hs-img" />
+	</div>
+	<div class="fn wireframe">
+		Marc
+	</div>
+	<div class="ln wireframe">
+		Particelli
+	</div>
+	<div class="city wireframe">
+		Greenwich, CT
+	</div>
+</div>
+<div class="pb wireframe">&nbsp;</div>
+</div>
+</body>
+</html>

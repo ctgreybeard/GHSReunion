@@ -1,0 +1,1 @@
+htmldoc --portrait --textfont Sans --outfile test.pdf --format pdf14 --header ... --footer ... --verbose --browserwidth 800 --color --continuous --left 5mm --no-title --no-toc badges/test.html
