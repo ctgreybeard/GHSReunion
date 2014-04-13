@@ -1,16 +1,13 @@
 <?php
 	$blockn = 0;
-	$rown = 0;
-	function startrow() {
-		global $rown;
-		$rown++;
-		echo "<div class=\"badge-row row$rown wireframe\">\n";
+	function startpage() {
+		echo "<div class=\"badge-page wireframe\"><!-- Start Badge Page -->\n";
 	}
-	function endrow() {
-		echo "</div>\n";
+	function endpage() {
+		echo "</div><!-- End Badge Page -->\n";
 	}
 	function genblock($fn, $mn, $ln, $city) {
-		global $blockn, $rown;
+		global $blockn;
 		$tname = strtolower($fn . $mn . $ln);
 		$iname = preg_replace( "/[^a-z]/" , '', $tname );
 		if ( $mn != '') { 
@@ -19,13 +16,11 @@
 			$sn = $ln;
 		}
 		$blockn++;
-		$pb = " badge$blockn";
-
-		if ( $blockn == 6) {
-			$blockn = 0;
-			$rown = 0;
-		}
-?><div class="badge wireframe<?= $pb ?>">
+		$badgenum = "badge$blockn";
+		if ( $blockn == 1) {
+			startpage();
+		} // end if
+?><div class="badge wireframe <?= $badgenum ?>"><!-- Start Badge -->
 	<!-- <?php echo "fn=$fn, $mn=$mn, ln=$ln, tname=$tname, iname=$iname" ?> -->
 	<div class="badge-header wireframe">
 		Greenwich High School Class of '64 50th Reunion
@@ -45,9 +40,13 @@
 	<div class="city wireframe">
 		<?= $city ?>
 	</div>
-</div>
-<?php	}
-
+</div><!-- End Badge -->
+<?php
+		if ( $blockn == 6) {
+			$blockn = 0;
+			endpage();
+		} // end if
+	}	// end function genblock
 ?><!DOCTYPE html>
 <html lang="en">
 <head>

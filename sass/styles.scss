@@ -35,12 +35,14 @@ $mw: 104mm;		// Measured column width
 
 $rh: $badgeheight * 2 - $mh;	// Row height with adjustment
 
-$cw: $badgewidth * 2 - $mw;	// Column width with adjustment
+$cw: $badgewidth * 2 - $mw;		// Column width with adjustment
 
 $c1: 0mm;
 $c2: $cw;
 
 $r1: 0mm;
+$r2: $r1 + $rh;
+$r3: $r2 + $rh;
 
 $basefontsize: 6mm;
 $bigfontsize: $basefontsize * 1.8;
@@ -72,16 +74,16 @@ body {
 /* 	clear-after: both; */
 }
 
-.badge, .badge-row {
+.badge, .badge-page {
 	@include box-sizing(border-box);
-	height: $rh;
 }
 
 /* badge row */
-.badge-row {
-	width: 206mm;
+.badge-page {
+	width: $badgewidth * 2;
+	height: $badgeheight * 3;
 	position: relative;
-	page-break-inside: avoid;
+	page-break-after: always;
 	clear: left;
 	display: block;
 }
@@ -89,30 +91,29 @@ body {
 /* badge block */
 .badge {
 	width: $badgewidth;
+	height: $badgeheight;
 	padding: 5mm;
 	position: absolute;
 }
 
-.row1 {
-/* 	top: $r1; */
-}
-
-.row2 {
-/* 	top: $r2; */
-}
-
-.row3 {
-/* 	top: $r3; */
-}
-
-.badge1, .badge3, .badge5 {
-	top: $r1;
+.badge1, .badge3, .badge5 { // Odds are left column
 	left: $c1;
 }
 
-.badge2, .badge4, .badge6 {
-	top: $r1;
+.badge2, .badge4, .badge6 { // Evens are right column
 	left: $c2;
+}
+
+.badge1, .badge2 { // Row 1
+	top: $r1;
+}
+
+.badge3, .badge4 { // Row 2
+	top: $r2;
+}
+
+.badge5, .badge6 { // Row 3
+	top: $r3;
 }
 
 .fn, .ln, .city, .badge-header, .hs, .badge-footer {
