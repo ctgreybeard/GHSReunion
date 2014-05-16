@@ -1,0 +1,17 @@
+
+
+
+=if(isblank(L405), "", 
+	concatenate(B405, 
+	" ",
+	concatenate(
+		if(isblank(C405),"","("),
+		A405,
+		if(isblank(C405),"",")")),
+	" ",
+	C405)
+	)
+
+
+=concatenate(B405, " ", concatenate( if(isblank(C405),"","("), A405, if(isblank(C405),"",")")), " ", C405)
+=if(isblank(L405), "", concatenate(B405, " ", concatenate( if(isblank(C405),"","("), A405, if(isblank(C405),"",")")), " ", C405))
